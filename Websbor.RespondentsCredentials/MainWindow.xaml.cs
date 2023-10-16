@@ -35,9 +35,10 @@ namespace Websbor.RespondentsCredentials
             db.UseSqlServer();
 
             var s = new WebsborContext(db.Options);
-            s.Database.EnsureCreated();
+            s.Database.EnsureCreatedAsync();
         }
 
+        #region меню Файл
         private void MenuItemLoadCredential_Click(object sender, RoutedEventArgs e)
         {
 
@@ -77,7 +78,9 @@ namespace Websbor.RespondentsCredentials
         {
 
         }
+        #endregion
 
+        #region меню БД
         private void MenuItemCreateDb_Click(object sender, RoutedEventArgs e)
         {
 
@@ -93,27 +96,31 @@ namespace Websbor.RespondentsCredentials
 
         }
 
-        private void MenuItemDeleteCatatlog(object sender, RoutedEventArgs e)
+        private void MenuItemDeleteCatalog_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region меню Протокол
+        private void MenuItemOpenProtocol(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void MenuItemOpenLoadProtocol(object sender, RoutedEventArgs e)
+        private void MenuItemOpenDirectoryProtocol(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region меню log
+        private void MenuItemOpenCurrentLogFile(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void MenuItemDirectoryProtocol(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void MenuItemCurrentLogFile(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void MenuItemDirectoryLogs(object sender, RoutedEventArgs e)
+        private void MenuItemOpenDirectoryLogs(object sender, RoutedEventArgs e)
         {
 
         }
@@ -122,7 +129,9 @@ namespace Websbor.RespondentsCredentials
         {
 
         }
+        #endregion
 
+        #region кнопки работы с учетными данными
         private void ButtonAddCredential_Click(object sender, RoutedEventArgs e)
         {
 
@@ -142,10 +151,37 @@ namespace Websbor.RespondentsCredentials
         {
 
         }
-
-        private void BtnSearch_Click(object sender, RoutedEventArgs e)
+        private void BtnSearchCredential_Click(object sender, RoutedEventArgs e)
         {
 
         }
+        #endregion
+
+        #region кнопки работы с каталогом web-сбора
+        private void BtnAddCatalog_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnEditCatalog_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnGetAllCatalog_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnSearchCatalog_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnDeleteCatalog_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
     }
 }
