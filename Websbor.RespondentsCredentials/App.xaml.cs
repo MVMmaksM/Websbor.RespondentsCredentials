@@ -8,8 +8,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Websbor.Data;
+using Websbor.Data.Repository;
 using Websbor.RespondentsCredentials.AppFacade;
 using Websbor.RespondentsCredentials.Services;
+using Websbor.RespondentsCredentials.ViewModel;
 
 namespace Websbor.RespondentsCredentials
 {
@@ -31,12 +33,15 @@ namespace Websbor.RespondentsCredentials
         {
             services.AddDbContext<WebsborContext>(options =>
             {
-                options.UseSqlServer("Data Source = Employee.db");
+                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=WebsborCredential;Trusted_Connection=True;Encrypt=false;Integrated Security=True;");
             });
 
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<ApplicationViewModel>();
             services.AddSingleton<IAppFacade, AppFacade.AppFacade>();
             services.AddSingleton<IMessageService, MessageService>();
+            services.AddSingleton<ICredentialsRepository, CredentialRepository>();
+            services.AddSingleton<ICatalogWebsborAsgsRepository, CatalogRepository>();
         }
 
         private void OnStartup(object sender, StartupEventArgs e)

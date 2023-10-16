@@ -25,11 +25,11 @@ namespace Websbor.RespondentsCredentials
     public partial class MainWindow : Window
     {
         private readonly IAppFacade _appFacade;
-        public MainWindow(IAppFacade appFacade)
+        public MainWindow(IAppFacade appFacade, ApplicationViewModel applicationViewModel)
         {
             InitializeComponent();
             _appFacade = appFacade;
-            DataContext = new ApplicationViewModel();
+            DataContext = applicationViewModel;
         }
 
         #region меню Файл
@@ -77,7 +77,7 @@ namespace Websbor.RespondentsCredentials
         #region меню БД
         private void MenuItemCreateDb_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.CreateDb();
         }
 
         private void MenuItemExecuteSqlQuery_Click(object sender, RoutedEventArgs e)
@@ -128,7 +128,7 @@ namespace Websbor.RespondentsCredentials
         #region кнопки работы с учетными данными
         private void ButtonAddCredential_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.AddCredential();
         }
 
         private void BtnDeleteCredential_Click(object sender, RoutedEventArgs e)
@@ -138,7 +138,7 @@ namespace Websbor.RespondentsCredentials
 
         private void BtnGetAllCredential_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.GetAllCredential();
         }
 
         private void BtnEditCredential_Click(object sender, RoutedEventArgs e)

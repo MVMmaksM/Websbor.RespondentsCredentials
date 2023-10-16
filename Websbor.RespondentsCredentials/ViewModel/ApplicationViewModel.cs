@@ -1,22 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Websbor.Data.Model;
 
 namespace Websbor.RespondentsCredentials.ViewModel
 {
-    public class ApplicationViewModel
+    public class ApplicationViewModel : INotifyPropertyChanged
     {
-        public ApplicationViewModel()
+        private List<Credentials> _credentials;
+        private List<CatalogWebsborAsgs> _catalog;
+        public List<Credentials> Credentials
         {
-            Credentials = new List<Credentials>
+            get { return _credentials; }
+            set
             {
-                new Credentials {Okpo="123123"}
-            };
+                _credentials = value;
+                OnPropertyChanged("Credentials");
+            }
         }
-        public List<Credentials> Credentials { get; set; }
-        public List<CatalogWebsborAsgs> Catalog { get; set; }
+
+        public List<CatalogWebsborAsgs> Catalog
+        {
+            get { return _catalog; }
+            set
+            {
+                _catalog = value;
+                OnPropertyChanged("_catalog");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }
