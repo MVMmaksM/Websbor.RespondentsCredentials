@@ -74,29 +74,34 @@ namespace Websbor.Data.Repository
                 .ToListAsync();
         }
 
-        public Task<int> GetIdByOkpoAsync(string okpo)
+        public async Task<int> GetIdByOkpoAsync(string okpo)
         {
-            throw new NotImplementedException();
+            return await _context.Credentials
+                .Where(c => c.Okpo == okpo)
+                .Select(c => c.Id).SingleOrDefaultAsync();
         }
 
-        public Task SaveCredentialAsync(Credentials credential)
+        public async Task SaveCredentialAsync(Credentials credential)
         {
-            throw new NotImplementedException();
+            await _context.Credentials.AddAsync(credential);
+            await _context.SaveChangesAsync();
         }
 
-        public Task SaveCredentialAsync(List<Credentials> credentials)
+        public async Task SaveCredentialAsync(List<Credentials> credentials)
         {
-            throw new NotImplementedException();
+            await _context.AddRangeAsync(credentials);
+            await _context.SaveChangesAsync();
         }
 
         public Task<List<Credentials>> SelectFromCredential(string sqlSelectQuery, SqlParameter sqlParameter)
         {
-            throw new NotImplementedException();
+            return _context.Credentials.FromSqlRaw(sqlSelectQuery, sqlParameter).ToListAsync();
         }
 
-        public Task UpdateCredentialAsync(Credentials credential)
+        public async Task UpdateCredentialAsync(Credentials credential)
         {
-            throw new NotImplementedException();
+            _context.Update(credential);
+            await _context.SaveChangesAsync();
         }
     }
 }

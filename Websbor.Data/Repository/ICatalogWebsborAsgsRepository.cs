@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Websbor.Data.Model;
@@ -28,12 +29,12 @@ namespace Websbor.Data.Repository
         /// <summary>
         /// получение записи по id
         /// </summary>
-        Task<CatalogWebsborAsgs> GetCatalogByIdAsync(int id);
+        Task<CatalogWebsborAsgs?> GetCatalogByIdAsync(int id);
 
         /// <summary>
         /// получение количества записей
         /// </summary>
-        Task<int> GetcountCatalogAsync();
+        Task<int> GetCountCatalogAsync();
 
         /// <summary>
         /// получение записей по ОКПО и наименованию
@@ -43,7 +44,7 @@ namespace Websbor.Data.Repository
         /// <summary>
         /// получение записей по условию делегата
         /// </summary>
-        Task<List<CatalogWebsborAsgs>> GetCatalogByWhere(Predicate<CatalogWebsborAsgs> predicate);
+        Task<List<CatalogWebsborAsgs>> GetCatalogByWhere(Expression<Func<CatalogWebsborAsgs, bool>> predicate);
 
         /// <summary>
         /// получение id по ОКПО
