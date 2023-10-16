@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Websbor.Data;
+using Websbor.RespondentsCredentials.AppFacade;
+using Websbor.RespondentsCredentials.Services;
 
 namespace Websbor.RespondentsCredentials
 {
@@ -33,6 +35,8 @@ namespace Websbor.RespondentsCredentials
             });
 
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<IAppFacade, AppFacade.AppFacade>();
+            services.AddSingleton<IMessageService, MessageService>();
         }
 
         private void OnStartup(object sender, StartupEventArgs e)

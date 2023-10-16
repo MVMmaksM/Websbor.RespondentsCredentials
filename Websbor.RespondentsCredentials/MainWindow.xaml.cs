@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Websbor.Data;
+using Websbor.RespondentsCredentials.AppFacade;
 using Websbor.RespondentsCredentials.ViewModel;
 
 namespace Websbor.RespondentsCredentials
@@ -23,19 +24,12 @@ namespace Websbor.RespondentsCredentials
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly IAppFacade _appFacade;
+        public MainWindow(IAppFacade appFacade)
         {
             InitializeComponent();
+            _appFacade = appFacade;
             DataContext = new ApplicationViewModel();
-        }
-
-        private void CreateDb_Click(object sender, RoutedEventArgs e)
-        {
-            var db = new DbContextOptionsBuilder<WebsborContext>();
-            db.UseSqlServer();
-
-            var s = new WebsborContext(db.Options);
-            s.Database.EnsureCreatedAsync();
         }
 
         #region меню Файл
@@ -183,5 +177,40 @@ namespace Websbor.RespondentsCredentials
 
         }
         #endregion
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void dgCredentials_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+
+        }
+
+        private void TxtBoxSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void dgCatalog_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+
+        }
+
+        private void TxtBxSearchCatalog_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void BtnSaveSettings_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

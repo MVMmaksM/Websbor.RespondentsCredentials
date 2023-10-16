@@ -60,16 +60,16 @@
         <TabControl Margin="0,24,0,25" Grid.ColumnSpan="2">
             <TabItem Header="Учетные данные респондентов" Name="TabItemCredential">
                 <Grid Background="#086499">
-                    <DataGrid CanUserSortColumns="True" x:Name="DataGridPasswords" ItemsSource="{Binding Credentials, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedPassword}"  AutoGenerateColumns="False" Margin="351,0,0,118" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff" LoadingRow="dgDataPasswords_LoadingRow" FontSize="14" FontFamily="Arial" BorderThickness="0,0,0,4">
+                    <DataGrid CanUserSortColumns="True" CanUserAddRows="False" x:Name="DataGridCredentials" ItemsSource="{Binding Credentials, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedPassword}"  AutoGenerateColumns="False" Margin="351,0,0,118" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff" LoadingRow="dgCredentials_LoadingRow" FontSize="14" FontFamily="Arial" BorderThickness="0,0,0,4">
                         <DataGrid.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#eb9534"/>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Наименование" CanUserSort="True" Binding="{Binding Path=Name}" Width="*" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="ОКПО" Binding="{Binding Path=Okpo}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Наименование" CanUserSort="True" Binding="{Binding Path=Name}" Width="*"/>
+                            <DataGridTextColumn Header="ОКПО" Binding="{Binding Path=Okpo}" Width="*"/>
                             <DataGridTextColumn Header="Пароль" Binding="{Binding Path=Password}" Width="*"/>
-                            <DataGridTextColumn Header="Дата создания" Binding="{Binding Path=DateCreate}"  Width="*" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Примечание" Binding="{Binding Path=Comment}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Дата создания" Binding="{Binding Path=DateCreate}"  Width="*"/>
+                            <DataGridTextColumn Header="Примечание" Binding="{Binding Path=Comment}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <GroupBox x:Name="GroupBoxRedact" Header="Редактирование" Margin="10,0,502,25" Height="86" VerticalAlignment="Bottom" FontFamily="Arial" UseLayoutRounding="True" Foreground="#FFFDFDFD" BorderBrush="#9cdbff" FontWeight="Bold">
@@ -175,7 +175,7 @@
             </TabItem>
             <TabItem Header="Каталог Web-сбора" Name="TabItemCatalog">
                 <Grid Background="#086499">
-                    <DataGrid x:Name="dgDataWebsbor" ItemsSource="{Binding WebsborGS}" AutoGenerateColumns="False" Margin="0,0,0,118" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff" LoadingRow="dgDataPasswords_LoadingRow" FontSize="14" FontFamily="Arial" BorderThickness="0,0,0,4" IsReadOnly="True">
+                    <DataGrid x:Name="dgDataWebsbor" ItemsSource="{Binding WebsborGS}" AutoGenerateColumns="False" Margin="0,0,0,118" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff" LoadingRow="dgCatalog_LoadingRow" FontSize="14" FontFamily="Arial" BorderThickness="0,0,0,4" IsReadOnly="True">
                         <DataGrid.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#eb9534"/>
                         </DataGrid.Resources>
@@ -250,7 +250,7 @@
                                     <DropShadowEffect Color="Black" Direction="285" ShadowDepth="2" Opacity="0.6"/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <TextBox x:Name="TxtBxSearchOkpoCatalog" Style="{StaticResource placeHolder}" FontFamily="Arial" Tag="ОКПО" VerticalContentAlignment="Center" Height="25" TextWrapping="Wrap" Text="" VerticalAlignment="Top" BorderBrush="#FF666666" Margin="7,1,2,0" KeyDown="TxtBoxSearch_KeyDown" FontSize="14">
+                            <TextBox x:Name="TxtBxSearchOkpoCatalog" Style="{StaticResource placeHolder}" FontFamily="Arial" Tag="ОКПО" VerticalContentAlignment="Center" Height="25" TextWrapping="Wrap" Text="" VerticalAlignment="Top" BorderBrush="#FF666666" Margin="7,1,2,0" KeyDown="TxtBxSearchCatalog_KeyDown" FontSize="14">
                                 <TextBox.Effect>
                                     <DropShadowEffect Color="Black" Direction="285" ShadowDepth="2" Opacity="0.6"/>
                                 </TextBox.Effect>
