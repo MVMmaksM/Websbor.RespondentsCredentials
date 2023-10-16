@@ -122,5 +122,30 @@ namespace Websbor.RespondentsCredentials
         {
 
         }
+
+        private void ButtonAddCredential_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnDeleteCredential_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnGetAllCredential_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnEditCredential_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnSearch_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -196,7 +196,7 @@
                                 <ColumnDefinition Width="141*"/>
                                 <ColumnDefinition Width="140*"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="BtnAddCatalog" Click="BtnAddCatalog_Click" Content="Добавить" VerticalAlignment="Top" Height="25" Background="#48b9fa" Margin="7,1,7,0" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" FontFamily="Arial">
+                            <Button x:Name="BtnAddCatalog" Click="BtnAddCatalog_Click" Content="Добавить запись" VerticalAlignment="Top" Height="25" Background="#48b9fa" Margin="7,1,7,0" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" FontFamily="Arial">
                                 <Button.Resources>
                                     <Style TargetType="Border">
                                         <Setter Property="CornerRadius" Value="2"/>
@@ -216,7 +216,7 @@
                                     <DropShadowEffect Color="Black" Direction="290" ShadowDepth="3" Opacity="0.6"/>
                                 </Button.Effect>
                             </Button>
-                            <Button x:Name="BtnDeleteCatalog" Click="BtnEditCatalog_Click" FontFamily="Arial" Content="Удалить" VerticalAlignment="Top"  Height="25" Background="#48b9fa" Margin="7,32,7,0" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold">
+                            <Button x:Name="BtnDeleteCatalog" Click="BtnEditCatalog_Click" FontFamily="Arial" Content="Удалить запись" VerticalAlignment="Top"  Height="25" Background="#48b9fa" Margin="7,32,7,0" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold">
                                 <Button.Resources>
                                     <Style TargetType="Border">
                                         <Setter Property="CornerRadius" Value="2"/>
@@ -226,7 +226,7 @@
                                     <DropShadowEffect Color="Black" Direction="290" ShadowDepth="3" Opacity="0.6"/>
                                 </Button.Effect>
                             </Button>
-                            <Button x:Name="BtnEditCatalog" FontFamily="Arial" Click="BtnEditCatalog_Click" Content="Редактировать" VerticalAlignment="Top"  Height="25" Background="#48b9fa" Margin="7,32,7,0" Grid.Column="1" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold">
+                            <Button x:Name="BtnEditCatalog" FontFamily="Arial" Click="BtnEditCatalog_Click" Content="Редактировать запись" VerticalAlignment="Top"  Height="25" Background="#48b9fa" Margin="7,32,7,0" Grid.Column="1" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold">
                                 <Button.Resources>
                                     <Style TargetType="Border">
                                         <Setter Property="CornerRadius" Value="2"/>
