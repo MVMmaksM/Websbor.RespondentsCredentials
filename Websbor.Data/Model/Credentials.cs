@@ -17,7 +17,7 @@ namespace Websbor.Data.Model
         public DateTime? DateUpdate { get; set; }
         public string? UserUpdate { get; set; }
         public string? Comment { get; set; }
-        public int CatalogWebsborAsgsId { get; set; }
+        public int? CatalogWebsborAsgsId { get; set; }
         public CatalogWebsborAsgs? CatalogWebsborAsgs { get; set; }
     }
 }

@@ -25,29 +25,30 @@
             <ColumnDefinition Width="497*"/>
             <ColumnDefinition Width="503*"/>
         </Grid.ColumnDefinitions>
-        <Menu Height="24" VerticalAlignment="Top" Background="#086499" FontFamily="Arial" RenderTransformOrigin="0.509,0.458" Grid.ColumnSpan="2" Foreground="White">
-            <MenuItem x:Name="MenuFile" Header="Файл" Height="23" Width="42" BorderThickness="1,1,1,1" >
+        <Menu Height="24" VerticalAlignment="Top" Background="#086499" FontFamily="Arial" RenderTransformOrigin="0.509,0.458" Grid.ColumnSpan="2" Foreground="White">            
+                <MenuItem x:Name="MenuFile" Header="Файл" Height="23" Width="42" BorderThickness="1,1,1,1" >
                 <MenuItem Header="Загрузить данные респондентов" Click="MenuItemLoadCredential_Click"/>
                 <MenuItem Header="Загрузить каталог web-сбора" Click="MenuItemLoadCatalog_Click"/>
                 <MenuItem Header="Выгрузить все записи из таблицы респондентов в Excel" Click="MenuItemSaveAllRowCredential_Click"/>
                 <MenuItem Header="Выгрузить текущие записи из таблицы респондентов в Excel" Click="MenuItemSaveCurrentRowsCredential_Click"/>
                 <MenuItem Header="Выгрузить все записи из таблицы Web-сбора в Excel" Click="MenuItemSaveAllRowCatalog_Click"/>
-                <MenuItem Header="Выгрузить текущие записи из таблицы Web-сбора в Excel" Click="MenuItemSaveCurrentRowsCatalog_Click"/>               
-                <MenuItem Header="Сохранить шаблон загрузки из Excel" Click="MenuItemShemaEcxel_Click"/>
+                <MenuItem Header="Выгрузить текущие записи из таблицы Web-сбора в Excel" Click="MenuItemSaveCurrentRowsCatalog_Click"/>
+                <MenuItem Header="Excel-шаблон загрузки учетных данных респондентов" Click="MenuItemShemaLoadCredential_Click"/>
+                <MenuItem Header="Excel-шаблон загрузки каталога web-сбора" Click="MenuItemShemaLoadCatalog_Click"/>
             </MenuItem>
             <MenuItem x:Name="MenuDB"  Header="БД" BorderThickness="1,1,1,1" Height="22">
-                <MenuItem Header="Создать базу данных" Click="CreateDb_Click"/>
-                <MenuItem Header="Восстановить копию" />
-                <MenuItem Header="Очистить таблицу пароли" Click="MenuItemDeletePassword_Click"/>
-                <MenuItem Header="Очистить таблицу Web-сбор"/>
+                <MenuItem Header="Создать базу данных" Click="MenuItemCreateDb_Click"/>
+                <MenuItem Header="Выполнить sql-запрос" Click="MenuItemExecuteSqlQuery_Click"/>
+                <MenuItem Header="Очистить таблицу учетных данных респондентов" Click="MenuItemDeleteCredential_Click"/>
+                <MenuItem Header="Очистить таблицу Web-сбор" Click="MenuItemDeleteCatatlog"/>
             </MenuItem>
             <MenuItem Header="Протокол" BorderThickness="1,1,1,1" Height="24" >
-                <MenuItem Header="Открыть"/>
-                <MenuItem Header="Показать в папке"/>
+                <MenuItem Header="Открыть протокол загрузки" Click="MenuItemOpenLoadProtocol"/>
+                <MenuItem Header="Открыть директорию" Click="MenuItemDirectoryProtocol"/>
             </MenuItem>
             <MenuItem Header="Логи" BorderThickness="1,1,1,1" VerticalAlignment="Center" Height="24">
                 <MenuItem Header="Открыть текущий log-файл"/>
-                <MenuItem Header="Откыть папку для log-файлов"/>
+                <MenuItem Header="Откыть директорию для log-файлов"/>
                 <MenuItem Header="Удалить все log-файлы"/>
             </MenuItem>
         </Menu>
@@ -57,7 +58,7 @@
             </StackPanel>
         </Border>
         <TabControl Margin="0,24,0,25" Grid.ColumnSpan="2">
-            <TabItem Header="Пароли" Name="TabItemPasswords">
+            <TabItem Header="Учетные данные респондентов" Name="TabItemCredential">
                 <Grid Background="#086499">
                     <DataGrid CanUserSortColumns="True" x:Name="DataGridPasswords" ItemsSource="{Binding Credentials, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedPassword}"  AutoGenerateColumns="False" Margin="351,0,0,118" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff" LoadingRow="dgDataPasswords_LoadingRow" FontSize="14" FontFamily="Arial" BorderThickness="0,0,0,4">
                         <DataGrid.Resources>
@@ -126,12 +127,12 @@
                                 <ColumnDefinition Width="159*"/>
                                 <ColumnDefinition Width="119*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="SearchName" FontFamily="Arial" Tag="Наименование" VerticalContentAlignment="Center" Height="25" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="3,1,6,0" KeyDown="TxtBoxSearch_KeyDown" FontSize="14" Grid.Column="1" Grid.ColumnSpan="2">
+                            <TextBox x:Name="SearchName" FontFamily="Arial" Style="{StaticResource placeHolder}" Tag="Наименование" VerticalContentAlignment="Center" Height="25" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="3,1,6,0" KeyDown="TxtBoxSearch_KeyDown" FontSize="14" Grid.Column="1" Grid.ColumnSpan="2">
                                 <TextBox.Effect>
                                     <DropShadowEffect Color="Black" Direction="285" ShadowDepth="2" Opacity="0.6"/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <TextBox x:Name="SearchOkpo"  FontFamily="Arial" Tag="ОКПО" VerticalContentAlignment="Center" Height="25" TextWrapping="Wrap" Text="" VerticalAlignment="Top" BorderBrush="#FF666666" Margin="7,1,2,0" FontSize="14">
+                            <TextBox x:Name="SearchOkpo"  FontFamily="Arial" Tag="ОКПО" VerticalContentAlignment="Center" Style="{StaticResource placeHolder}" Height="25" TextWrapping="Wrap" Text="" VerticalAlignment="Top" BorderBrush="#FF666666" Margin="7,1,2,0" FontSize="14">
                                 <TextBox.Effect>
                                     <DropShadowEffect Color="Black" Direction="285" ShadowDepth="2" Opacity="0.6"/>
                                 </TextBox.Effect>
@@ -172,7 +173,7 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Каталог Web-сбора" Name="TabItemWebsborGS">
+            <TabItem Header="Каталог Web-сбора" Name="TabItemCatalog">
                 <Grid Background="#086499">
                     <DataGrid x:Name="dgDataWebsbor" ItemsSource="{Binding WebsborGS}" AutoGenerateColumns="False" Margin="0,0,0,118" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff" LoadingRow="dgDataPasswords_LoadingRow" FontSize="14" FontFamily="Arial" BorderThickness="0,0,0,4" IsReadOnly="True">
                         <DataGrid.Resources>
