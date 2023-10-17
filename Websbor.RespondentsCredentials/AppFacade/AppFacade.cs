@@ -34,17 +34,7 @@ namespace Websbor.RespondentsCredentials.AppFacade
 
         public void AddCredential()
         {
-            var cred = new Credentials { Okpo = "123123", Name = "ОАО", Password = "sd786Gug*/", UserCreate = "Ivan", UserUpdate = "Mixa", Comment = "лорлфыао", DateCreate = DateTime.Now };
 
-
-            try
-            {
-                _credentialsRepository.SaveCredentialAsync(cred);
-            }
-            catch (Exception ex)
-            {
-                _messageService.Error(ex.Message);
-            }
         }
 
         public async void CreateDb()
@@ -113,10 +103,6 @@ namespace Websbor.RespondentsCredentials.AppFacade
         public async void GetAllCredential()
         {
             _applicationViewModel.Credentials = new List<Credentials>(await _credentialsRepository.GetAllCredentialsAsync());
-            //_applicationViewModel.Credentials = new List<Credentials>
-            //{
-            //    new Credentials { Okpo = "123123", Name = "ОАО", Password = "sd786Gug*/", UserCreate = "Ivan", UserUpdate = "Mixa", Comment = "лорлфыао", DateCreate = DateTime.Now } };
-
         }
 
         public void LoadCatalog()

@@ -60,7 +60,7 @@
         <TabControl Margin="0,24,0,25" Grid.ColumnSpan="2">
             <TabItem Header="Учетные данные респондентов" Name="TabItemCredential">
                 <Grid Background="#086499">
-                    <DataGrid CanUserSortColumns="True" CanUserAddRows="False" x:Name="DataGridCredentials" ItemsSource="{Binding Credentials, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedPassword}"  AutoGenerateColumns="False" Margin="351,0,0,118" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff" LoadingRow="dgCredentials_LoadingRow" FontSize="14" FontFamily="Arial" BorderThickness="0,0,0,4">
+                    <DataGrid CanUserSortColumns="True" CanUserAddRows="False" x:Name="DataGridCredentials" ItemsSource="{Binding Credentials, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCatalog}"  AutoGenerateColumns="False" Margin="351,0,0,118" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff" LoadingRow="dgCredentials_LoadingRow" FontSize="14" FontFamily="Arial" BorderThickness="0,0,0,4">
                         <DataGrid.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#eb9534"/>
                         </DataGrid.Resources>
@@ -153,7 +153,7 @@
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Данные из каталога Web-сбора" Margin="0,0,643,118" Foreground="WhiteSmoke">
-                        <StackPanel x:Name="Stack"  Orientation="Vertical" DataContext="{Binding SelectedPassword}">
+                        <StackPanel x:Name="Stack"  Orientation="Vertical" DataContext="{Binding SelectedCatalog}">
                             <Label Content="Наименование" Foreground="WhiteSmoke" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="319"/>
                             <TextBox Margin="10,0,10,0" IsReadOnly="True" Height="25" VerticalContentAlignment="Center" Text="{Binding Path=NameGS, UpdateSourceTrigger=PropertyChanged}"/>
                             <Label Content="Краткое наименование" Foreground="WhiteSmoke" Margin="10,10,10,0" Height="25" Width="316"/>

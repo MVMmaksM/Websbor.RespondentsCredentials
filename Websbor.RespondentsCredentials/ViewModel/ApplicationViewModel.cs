@@ -14,6 +14,17 @@ namespace Websbor.RespondentsCredentials.ViewModel
     {
         private List<Credentials> _credentials;
         private List<CatalogWebsborAsgs> _catalog;
+        private object _selectedCatalog;
+
+        public object SelectedCatalog
+        {
+            get { return _selectedCatalog; }
+            set
+            {
+                _selectedCatalog = ((Credentials)value).CatalogWebsborAsgs;
+                OnPropertyChanged("SelectedCatalog");
+            }
+        }
         public List<Credentials> Credentials
         {
             get { return _credentials; }
