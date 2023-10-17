@@ -9,6 +9,7 @@ using Websbor.Data;
 using Websbor.Data.Model;
 using Websbor.Data.Repository;
 using Websbor.RespondentsCredentials.Services;
+using Websbor.RespondentsCredentials.View;
 using Websbor.RespondentsCredentials.ViewModel;
 
 namespace Websbor.RespondentsCredentials.AppFacade
@@ -34,7 +35,8 @@ namespace Websbor.RespondentsCredentials.AppFacade
 
         public void AddCredential()
         {
-
+            var addCredentialWindow = new AddAndEditCredentialWindow(_messageService, _credentialsRepository);
+            addCredentialWindow.Show();
         }
 
         public async void CreateDb()

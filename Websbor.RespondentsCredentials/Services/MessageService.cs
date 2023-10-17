@@ -16,7 +16,7 @@ namespace Websbor.RespondentsCredentials.Services
 
         public void Info(string message)
         {
-            MessageBox.Show(message, "Инфрмация", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+            MessageBox.Show(message, "Информация", MessageBoxButton.OKCancel, MessageBoxImage.Information);
         }
 
         public void Warning(string message)
