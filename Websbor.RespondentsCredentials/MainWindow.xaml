@@ -124,18 +124,18 @@
                         </Grid>
                     </GroupBox>
                     <GroupBox x:Name="GroupBoxSearch" Header="Поиск" Margin="497,0,10,25" Height="86" VerticalAlignment="Bottom" FontFamily="Arial" FontWeight="Bold" Foreground="#FFFBFBFB" BorderBrush="#9cdbff">
-                        <Grid x:Name="GridSearch">
+                        <Grid x:Name="GridSearchCredential" DataContext="{Binding Path=Search}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="277*"/>
                                 <ColumnDefinition Width="159*"/>
                                 <ColumnDefinition Width="119*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="TxtSearchNameCredential" FontFamily="Arial" Style="{StaticResource placeHolder}" Tag="Наименование" VerticalContentAlignment="Center" Height="25" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="3,1,6,0" KeyDown="TxtBoxSearch_KeyDown" FontSize="14" Grid.Column="1" Grid.ColumnSpan="2">
+                            <TextBox x:Name="TxtSearchNameCredential" FontFamily="Arial" Text="{Binding Path=SearchByName}" Style="{StaticResource placeHolder}" Tag="Наименование" VerticalContentAlignment="Center" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Margin="3,1,6,0" KeyDown="TxtBoxSearch_KeyDown" FontSize="14" Grid.Column="1" Grid.ColumnSpan="2">
                                 <TextBox.Effect>
                                     <DropShadowEffect Color="Black" Direction="285" ShadowDepth="2" Opacity="0.6"/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <TextBox x:Name="TxtSearchOkpoCredential"  FontFamily="Arial" Tag="ОКПО" VerticalContentAlignment="Center" Style="{StaticResource placeHolder}" Height="25" TextWrapping="Wrap" Text="" VerticalAlignment="Top" BorderBrush="#FF666666" Margin="7,1,2,0" FontSize="14">
+                            <TextBox x:Name="TxtSearchOkpoCredential" Text="{Binding Path=SearchByOkpo}" FontFamily="Arial" Tag="ОКПО" VerticalContentAlignment="Center" Style="{StaticResource placeHolder}" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" BorderBrush="#FF666666" Margin="7,1,2,0" FontSize="14">
                                 <TextBox.Effect>
                                     <DropShadowEffect Color="Black" Direction="285" ShadowDepth="2" Opacity="0.6"/>
                                 </TextBox.Effect>

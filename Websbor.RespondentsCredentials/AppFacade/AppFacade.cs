@@ -163,7 +163,7 @@ namespace Websbor.RespondentsCredentials.AppFacade
         }
         public void SearchCredential()
         {
-            throw new NotImplementedException();
+
         }
         #endregion
 

@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Websbor.Data.Model;
+using Websbor.RespondentsCredentials.SearchModel;
 
 namespace Websbor.RespondentsCredentials.ViewModel
 {
@@ -17,6 +18,11 @@ namespace Websbor.RespondentsCredentials.ViewModel
         private Credentials? _selectedCredential;
         private CatalogWebsborAsgs? _selectedCatalog;
 
+        public ApplicationViewModel()
+        {
+            Search = new SearchModel.SearchModel();
+        }
+        public SearchModel.SearchModel? Search { get; set; }
         public CatalogWebsborAsgs SelectedCatalog
         {
             get { return _selectedCatalog; }

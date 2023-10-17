@@ -147,7 +147,7 @@ namespace Websbor.RespondentsCredentials
         }
         private void BtnSearchCredential_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.SearchCredential();
         }
         #endregion
 
