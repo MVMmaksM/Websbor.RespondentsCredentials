@@ -24,6 +24,6 @@ namespace Websbor.Data.Model
         public int Okogu { get; set; }
         public short Okfs { get; set; }
         public int Okopf { get; set; }
-        public List<Credentials> Credentials { get; set; }
+        public List<Credentials>? Credentials { get; set; }
     }
 }

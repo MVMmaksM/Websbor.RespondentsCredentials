@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Websbor.Data.Model;
+using Websbor.Data.Repository;
+using Websbor.RespondentsCredentials.Services;
 
 namespace Websbor.RespondentsCredentials.View
 {
@@ -19,9 +22,22 @@ namespace Websbor.RespondentsCredentials.View
     /// </summary>
     public partial class AddAndEditCredential : Window
     {
-        public AddAndEditCredential()
+        private readonly IMessageService _messageService;
+        private readonly ICredentialsRepository _credentialRepository;
+        private readonly Credentials _credential;
+        public AddAndEditCredential(IMessageService messageService, ICredentialsRepository credentialRepository, Credentials credential)
         {
             InitializeComponent();
+            _credentialRepository = credentialRepository;
+            _credential = credential;
+            this.DataContext = _credential;
+            _messageService = messageService;
+        }
+
+        private void BtnSaveCredential_Click(object sender, RoutedEventArgs e)
+        {
+            _credentialRepository.UpdateCredentialAsync(_credential);
+            _messageService.Info("Изменения успешно сохранены");
         }
     }
 }

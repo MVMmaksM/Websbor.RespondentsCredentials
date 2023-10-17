@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Websbor.RespondentsCredentials.Services
 {
-    internal interface IMessageService
+    public interface IMessageService
     {
         void Info(string message);
         void Error(string message);

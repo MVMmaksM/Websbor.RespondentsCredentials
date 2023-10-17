@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Websbor.RespondentsCredentials.Services
 {
-    internal class MessageService : IMessageService
+    public class MessageService : IMessageService
     {
         public void Error(string message)
         {
