@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,7 +35,11 @@ namespace Websbor.RespondentsCredentials.View
 
             if (updateCredential is null)
             {
-                _addCredential = new Credentials();
+                _addCredential = new Credentials() 
+                { 
+                    UserCreate = WindowsIdentity.GetCurrent().Name,
+                    DateCreate = DateTime.Now,
+                };
                 this.DataContext = _addCredential;
             }
             else
