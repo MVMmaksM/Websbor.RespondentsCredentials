@@ -2,6 +2,7 @@
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,17 +29,173 @@ namespace Websbor.RespondentsCredentials.AppFacade
             _credentialsRepository = credentialsRepository;
             _catalogRepository = catalogRepository;
         }
-        public void AddCatalog()
+
+        #region работа с каталогом      
+        public void AddCatalog(MainWindow mainWindow)
+        {
+            var addCatalogWindow = new AddAndEditCatalogWindow(_messageService, _catalogRepository);
+            addCatalogWindow.Owner = mainWindow;
+            addCatalogWindow.Show();
+        }
+        public async void DeleteCatalogRow()
+        {
+            try
+            {
+                await _catalogRepository.DeleteCatalogAsync(_applicationViewModel.SelectedCatalog);
+                _messageService.Info("Запись успешно удалена!");
+            }
+            catch (Exception ex)
+            {
+                _messageService.Error(ex.Message);
+            }
+        }
+        public void EditCatalog(MainWindow mainWindow)
+        {
+            var addCatalogWindow = new AddAndEditCatalogWindow(_messageService, _catalogRepository, _applicationViewModel.SelectedCatalog);
+            addCatalogWindow.Owner = mainWindow;
+            addCatalogWindow.Show();
+        }
+        public async void DeleteCatalog()
+        {
+            if (_messageService.Question("Удалить все записи из каталога Web-сбора?"))
+            {
+                try
+                {
+                    var countDeletedRows = await _catalogRepository.DeleteAllCatalog();
+                    _messageService.Info($"Из каталога Web-сбора было удалено {countDeletedRows} записей!");
+                }
+                catch (Exception ex)
+                {
+                    _messageService.Error(ex.Message);
+                }
+            }
+        }
+        public async void GetAllCatalog()
+        {
+            try
+            {
+                var catalog = await _catalogRepository.GetAllCatalogAsync();
+                _applicationViewModel.Catalog = new BindingList<CatalogWebsborAsgs>(catalog);
+            }
+            catch (Exception ex)
+            {
+                _messageService.Error(ex.Message);
+            }
+        }
+        public void SearchCatalog()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region работа с файлами
+        public void SaveAllCatalog()
+        {
+            throw new NotImplementedException();
+        }
+        public void SaveCurrentRowsCatalog()
+        {
+            throw new NotImplementedException();
+        }
+        public void LoadCatalog()
         {
             throw new NotImplementedException();
         }
 
-        public void AddCredential()
+        public void LoadCredential()
         {
-            var addCredentialWindow = new AddAndEditCredentialWindow(_messageService, _credentialsRepository);
-            addCredentialWindow.Show();
+            throw new NotImplementedException();
+        }
+        public void SaveAllCredential()
+        {
+            throw new NotImplementedException();
+        }
+        public void SaveCurrentRowsCredential()
+        {
+            throw new NotImplementedException();
+        }
+        public void ShemaLoadCatalog()
+        {
+            throw new NotImplementedException();
         }
 
+        public void ShemaLoadCredential()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region работа с учетными данными
+        public void AddCredential(MainWindow mainWindow)
+        {
+            var addCredentialWindow = new AddAndEditCredentialWindow(_catalogRepository, _messageService, _credentialsRepository);
+            addCredentialWindow.Owner = mainWindow;
+            addCredentialWindow.Show();
+        }
+        public void DeleteCredential()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteCredentialRow()
+        {
+            throw new NotImplementedException();
+        }
+        public void EditCredential(MainWindow mainWindow)
+        {
+            var addCredentialWindow = new AddAndEditCredentialWindow(_catalogRepository, _messageService, _credentialsRepository,
+                _applicationViewModel.SelectedCredential);
+            addCredentialWindow.Owner = mainWindow;
+            addCredentialWindow.Show();
+        }
+        public async void GetAllCredential()
+        {
+            try
+            {
+                var credentials = await _credentialsRepository.GetAllCredentialsAsync();
+                _applicationViewModel.Credentials = new BindingList<Credentials>(credentials);
+            }
+            catch (Exception ex)
+            {
+                _messageService.Error(ex.Message);
+            }
+        }
+        public void SearchCredential()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region работа с log
+        public void DeleteLogs()
+        {
+            throw new NotImplementedException();
+        }
+        public void OpenCurrentLogFile()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OpenDirectoryLogs()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region работа с протоколом
+        public void OpenDirectoryProtocol()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OpenProtocol()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region запросы к БД
         public async void CreateDb()
         {
             var optionBuilder = new DbContextOptionsBuilder<WebsborContext>();
@@ -56,125 +213,10 @@ namespace Websbor.RespondentsCredentials.AppFacade
                 _messageService.Error("База данных не создана!");
             }
         }
-
-        public void DeleteCatalog()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteCatalogRow()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteCredential()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteCredentialRow()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteLogs()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EditCatalog()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EditCredential()
-        {
-            throw new NotImplementedException();
-        }
-
         public void ExecuteSqlQuery()
         {
             throw new NotImplementedException();
         }
-
-        public void GetAllCatalog()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async void GetAllCredential()
-        {
-            _applicationViewModel.Credentials = new List<Credentials>(await _credentialsRepository.GetAllCredentialsAsync());
-        }
-
-        public void LoadCatalog()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LoadCredential()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OpenCurrentLogFile()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OpenDirectoryLogs()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OpenDirectoryProtocol()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OpenProtocol()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveAllCatalog()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveAllCredential()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveCurrentRowsCatalog()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveCurrentRowsCredential()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SearchCatalog()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SearchCredential()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShemaLoadCatalog()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShemaLoadCredential()
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 }

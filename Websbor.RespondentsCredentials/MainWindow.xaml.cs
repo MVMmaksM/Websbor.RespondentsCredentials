@@ -128,7 +128,7 @@ namespace Websbor.RespondentsCredentials
         #region кнопки работы с учетными данными
         private void ButtonAddCredential_Click(object sender, RoutedEventArgs e)
         {
-            _appFacade.AddCredential();
+            _appFacade.AddCredential(this);
         }
 
         private void BtnDeleteCredential_Click(object sender, RoutedEventArgs e)
@@ -143,7 +143,7 @@ namespace Websbor.RespondentsCredentials
 
         private void BtnEditCredential_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.EditCredential(this);
         }
         private void BtnSearchCredential_Click(object sender, RoutedEventArgs e)
         {
@@ -154,17 +154,17 @@ namespace Websbor.RespondentsCredentials
         #region кнопки работы с каталогом web-сбора
         private void BtnAddCatalog_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.AddCatalog(this);
         }
 
         private void BtnEditCatalog_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.EditCatalog(this);
         }
 
         private void BtnGetAllCatalog_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.GetAllCatalog();
         }
 
         private void BtnSearchCatalog_Click(object sender, RoutedEventArgs e)

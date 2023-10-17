@@ -13,7 +13,8 @@ namespace Websbor.Data.Repository
     public interface ICatalogWebsborAsgsRepository
     {
         Task<List<CatalogWebsborAsgs>> GetAllCatalogAsync();
-        Task<List<CatalogWebsborAsgs>> GetCatalogByOkpoAsync(string okpo);
+        Task<CatalogWebsborAsgs>? GetCatalogByOkpoAsync(string okpo);
+        Task<List<CatalogWebsborAsgs>> GetCatalogByLikeOkpoAsync(string okpo);
         Task<List<CatalogWebsborAsgs>> GetCatalogByNameAsync(string name);
         Task<CatalogWebsborAsgs?> GetCatalogByIdAsync(int id);
         Task<int> GetCountCatalogAsync();

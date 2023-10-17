@@ -12,20 +12,33 @@ namespace Websbor.RespondentsCredentials.ViewModel
 {
     public class ApplicationViewModel : INotifyPropertyChanged
     {
-        private List<Credentials> _credentials;
-        private List<CatalogWebsborAsgs> _catalog;
-        private object _selectedCatalog;
+        private BindingList<Credentials>? _credentials;
+        private BindingList<CatalogWebsborAsgs>? _catalog;
+        private Credentials? _selectedCredential;
+        private CatalogWebsborAsgs? _selectedCatalog;
 
-        public object SelectedCatalog
+        public CatalogWebsborAsgs SelectedCatalog
         {
             get { return _selectedCatalog; }
             set
             {
-                _selectedCatalog = ((Credentials)value).CatalogWebsborAsgs;
+                _selectedCatalog = value;
                 OnPropertyChanged("SelectedCatalog");
             }
         }
-        public List<Credentials> Credentials
+
+
+        public Credentials SelectedCredential
+        {
+            get { return _selectedCredential; }
+            set
+            {
+                _selectedCredential = value;
+                OnPropertyChanged("SelectedCredential");
+            }
+        }
+
+        public BindingList<Credentials> Credentials
         {
             get { return _credentials; }
             set
@@ -35,13 +48,13 @@ namespace Websbor.RespondentsCredentials.ViewModel
             }
         }
 
-        public List<CatalogWebsborAsgs> Catalog
+        public BindingList<CatalogWebsborAsgs> Catalog
         {
             get { return _catalog; }
             set
             {
                 _catalog = value;
-                OnPropertyChanged("_catalog");
+                OnPropertyChanged("Catalog");
             }
         }
 

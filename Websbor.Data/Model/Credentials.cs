@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Websbor.Data.Model
 {
-    public class Credentials
+    public class Credentials : INotifyPropertyChanged
     {
         public int Id { get; set; }
         [MaxLength(256)]
@@ -26,6 +26,23 @@ namespace Websbor.Data.Model
         public string? UserUpdate { get; set; }
         public string? Comment { get; set; }
         public int? CatalogWebsborAsgsId { get; set; }
-        public CatalogWebsborAsgs? CatalogWebsborAsgs { get; set; }
+
+        private CatalogWebsborAsgs _catalogWebsborAsgs;
+
+        public CatalogWebsborAsgs CatalogWebsborAsgs
+        {
+            get { return _catalogWebsborAsgs; }
+            set 
+            { 
+                _catalogWebsborAsgs = value;
+                OnPropertyChanged("CatalogWebsborAsgs");
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }       
     }
 }

@@ -89,11 +89,21 @@ namespace Websbor.Data.Repository
         /// <summary>
         /// получение записей по ОКПО
         /// </summary>
-        public async Task<List<CatalogWebsborAsgs>> GetCatalogByOkpoAsync(string okpo)
+        public async Task<CatalogWebsborAsgs>? GetCatalogByOkpoAsync(string okpo)
         {
             return await _context.Catalog
-                .Where(c => EF.Functions.Like(c.Okpo, $"%{okpo}%"))
-                .ToListAsync();
+                .Where(c => c.Okpo == okpo)
+                .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// получение записей по вхождению ОКПО 
+        /// </summary>
+        public async Task<List<CatalogWebsborAsgs>> GetCatalogByLikeOkpoAsync(string okpo)
+        {
+            return await _context.Catalog
+               .Where(c => EF.Functions.Like(c.Okpo, $"%{okpo}%"))
+               .ToListAsync();
         }
 
         /// <summary>
@@ -149,7 +159,7 @@ namespace Websbor.Data.Repository
         /// получение всех записей
         /// </summary>
         public async Task<List<CatalogWebsborAsgs>> GetAllCatalogAsync() => await _context.Catalog.ToListAsync();
-        
+
         /// <summary>
         /// получение количества записей 
         /// </summary>
@@ -161,6 +171,6 @@ namespace Websbor.Data.Repository
         public async Task<List<CatalogWebsborAsgs>> SelectFromCatalog(string sqlSelectQuery, SqlParameter sqlParameter)
         {
             return await _context.Catalog.FromSqlRaw(sqlSelectQuery, sqlParameter).ToListAsync();
-        }        
+        }       
     }
 }

@@ -23,11 +23,12 @@ namespace Websbor.RespondentsCredentials.View
     /// </summary>
     public partial class AddAndEditCredentialWindow : Window
     {
+        private readonly ICatalogWebsborAsgsRepository _catalogRepository;
         private readonly IMessageService _messageService;
         private readonly ICredentialsRepository _credentialRepository;
         private readonly Credentials? _updateCredential;
         private readonly Credentials? _addCredential;
-        public AddAndEditCredentialWindow(IMessageService messageService, ICredentialsRepository credentialRepository, Credentials? updateCredential = null)
+        public AddAndEditCredentialWindow(ICatalogWebsborAsgsRepository catalogRepository, IMessageService messageService, ICredentialsRepository credentialRepository, Credentials? updateCredential = null)
         {
             InitializeComponent();
             _credentialRepository = credentialRepository;
@@ -35,11 +36,12 @@ namespace Websbor.RespondentsCredentials.View
 
             if (updateCredential is null)
             {
-                _addCredential = new Credentials() 
-                { 
+                _addCredential = new Credentials()
+                {
                     UserCreate = WindowsIdentity.GetCurrent().Name,
                     DateCreate = DateTime.Now,
                 };
+                _catalogRepository = catalogRepository;
                 this.DataContext = _addCredential;
             }
             else
@@ -67,6 +69,7 @@ namespace Websbor.RespondentsCredentials.View
             {
                 try
                 {
+                    _updateCredential.DateUpdate = DateTime.Now;
                     await _credentialRepository.UpdateCredentialAsync(_updateCredential);
                     _messageService.Info("Запись успешно обновлена!");
                 }
@@ -77,9 +80,19 @@ namespace Websbor.RespondentsCredentials.View
             }
         }
 
-        private void TxtBxOkpo_LostFocus(object sender, RoutedEventArgs e)
+        private async void TxtBxOkpo_LostFocus(object sender, RoutedEventArgs e)
         {
-
+            if (_addCredential is not null)
+            {
+                try
+                {
+                    _addCredential.CatalogWebsborAsgs = await _catalogRepository.GetCatalogByOkpoAsync(_addCredential.Okpo);
+                }
+                catch (Exception ex)
+                {
+                    _messageService.Error(ex.Message);
+                }
+            }
         }
     }
 }

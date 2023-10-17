@@ -25,13 +25,13 @@ namespace Websbor.RespondentsCredentials.AppFacade
         void OpenCurrentLogFile();
         void OpenDirectoryLogs();
         void DeleteLogs();
-        void AddCredential();
+        void AddCredential(MainWindow mainWindow);
         void DeleteCredentialRow();
         void GetAllCredential();
-        void EditCredential();
+        void EditCredential(MainWindow mainWindow);
         void SearchCredential();
-        void AddCatalog();
-        void EditCatalog();
+        void AddCatalog(MainWindow mainWindow);
+        void EditCatalog(MainWindow mainWindow);
         void GetAllCatalog();
         void SearchCatalog();
         void DeleteCatalogRow();

@@ -60,7 +60,7 @@
         <TabControl Margin="0,24,0,25" Grid.ColumnSpan="2">
             <TabItem Header="Учетные данные респондентов" Name="TabItemCredential">
                 <Grid Background="#086499">
-                    <DataGrid CanUserSortColumns="True" CanUserAddRows="False" x:Name="DataGridCredentials" ItemsSource="{Binding Credentials, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCatalog}"  AutoGenerateColumns="False" Margin="351,0,0,118" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff" LoadingRow="dgCredentials_LoadingRow" FontSize="14" FontFamily="Arial" BorderThickness="0,0,0,4">
+                    <DataGrid CanUserSortColumns="True" CanUserAddRows="False" x:Name="DataGridCredentials" ItemsSource="{Binding Credentials}" SelectedItem="{Binding SelectedCredential}"  AutoGenerateColumns="False" Margin="351,0,0,118" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff" LoadingRow="dgCredentials_LoadingRow" FontSize="14" FontFamily="Arial" BorderThickness="0,0,0,4">
                         <DataGrid.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#eb9534"/>
                         </DataGrid.Resources>
@@ -153,47 +153,54 @@
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Данные из каталога Web-сбора" Margin="0,0,643,118" Foreground="WhiteSmoke">
-                        <StackPanel x:Name="Stack"  Orientation="Vertical" DataContext="{Binding SelectedCatalog}">
-                            <Label Content="Наименование" Foreground="WhiteSmoke" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="319"/>
-                            <TextBox Margin="10,0,10,0" IsReadOnly="True" Height="25" VerticalContentAlignment="Center" Text="{Binding Path=NameGS, UpdateSourceTrigger=PropertyChanged}"/>
+                        <StackPanel x:Name="Stack"  Orientation="Vertical" DataContext="{Binding SelectedCredential.CatalogWebsborAsgs}">
+                            <Label Content="Полное наименование" Foreground="WhiteSmoke" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="319"/>
+                            <TextBox Margin="10,0,10,0" IsReadOnly="True" Height="25" VerticalContentAlignment="Center" Text="{Binding Path=FullName}"/>
                             <Label Content="Краткое наименование" Foreground="WhiteSmoke" Margin="10,10,10,0" Height="25" Width="316"/>
-                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=ShortNameGS, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=ShortName}"/>
                             <Label Content="ОКПО" Margin="10,10,10,0" Foreground="WhiteSmoke" Height="25"/>
-                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=OkpoGS, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=Okpo}"/>
                             <Label Content="ОКПО ЮЛ" Margin="10,10,10,0" Foreground="WhiteSmoke" Height="25"/>
-                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=OkpoUlGS, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=OkpoUl}"/>
                             <Label Content="ИНН" Margin="10,10,10,0" Foreground="WhiteSmoke" Height="25"/>
-                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=Inn, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=Inn}"/>
                             <Label Content="Адрес" Margin="10,10,10,0" Foreground="WhiteSmoke" Height="25"/>
-                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=AddressGS, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=Address}"/>
                             <Label Content="Телефон" Margin="10,10,10,0" Foreground="WhiteSmoke" Height="25"/>
-                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=TelephoneGS, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=Telephone}"/>
                             <Label Content="Доп телефон" Margin="10,10,10,0" Foreground="WhiteSmoke" Height="25"/>
-                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=DopTelephoneGs, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=DopTelephone}"/>
                             <Label Content="Электронная почта" Margin="10,10,10,0" Foreground="WhiteSmoke" Height="25"/>
-                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=Email, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Height="25" IsReadOnly="True" Margin="10,0,10,0" VerticalContentAlignment="Center" Text="{Binding Path=Email}"/>
                         </StackPanel>
                     </GroupBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Каталог Web-сбора" Name="TabItemCatalog">
                 <Grid Background="#086499">
-                    <DataGrid x:Name="dgDataWebsbor" ItemsSource="{Binding WebsborGS}" AutoGenerateColumns="False" Margin="0,0,0,118" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff" LoadingRow="dgCatalog_LoadingRow" FontSize="14" FontFamily="Arial" BorderThickness="0,0,0,4" IsReadOnly="True">
+                    <DataGrid x:Name="DgCatalog" ItemsSource="{Binding Path=Catalog}" SelectedItem="{Binding Path=SelectedCatalog}" AutoGenerateColumns="False" Margin="0,0,0,118" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff" LoadingRow="dgCatalog_LoadingRow" FontSize="14" FontFamily="Arial" BorderThickness="0,0,0,4" IsReadOnly="True">
                         <DataGrid.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#eb9534"/>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Наименование" Binding="{Binding Path=NameGS}" Width="*"/>
-                            <DataGridTextColumn Header="Краткое наименование" Binding="{Binding Path=ShortNameGS}" Width="*"/>
-                            <DataGridTextColumn Header="ОКПО" Binding="{Binding Path=OkpoGS}" Width="*"/>
-                            <DataGridTextColumn Header="ОКПО ЮЛ" Binding="{Binding Path=OkpoUlGS}" Width="*"/>
-                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path=AddressGS}" Width="*"/>
-                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path=TelephoneGS}"  Width="*"/>
-                            <DataGridTextColumn Header="Доп телефон" Binding="{Binding Path=DopTelephoneGs}"  Width="*"/>
+                            <DataGridTextColumn Header="Полное наименование" Binding="{Binding Path=FullName}" Width="*"/>
+                            <DataGridTextColumn Header="Краткое наименование" Binding="{Binding Path=ShortName}" Width="*"/>
+                            <DataGridTextColumn Header="ОКПО" Binding="{Binding Path=Okpo}" Width="*"/>
+                            <DataGridTextColumn Header="ОКПО ЮЛ" Binding="{Binding Path=OkpoUl}" Width="*"/>
+                            <DataGridTextColumn Header="ИНН" Binding="{Binding Path=Inn}" Width="*"/>
+                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path=Address}" Width="*"/>
+                            <DataGridTextColumn Header="ОКВЭД2 факт." Binding="{Binding Path=Okved2Fact}" Width="*"/>
+                            <DataGridTextColumn Header="ОКАТО факт." Binding="{Binding Path=OkatoFact}" Width="*"/>
+                            <DataGridTextColumn Header="ОКТМО факт." Binding="{Binding Path=OktmoFact}" Width="*"/>
+                            <DataGridTextColumn Header="ОКОГУ" Binding="{Binding Path=Okogu}" Width="*"/>
+                            <DataGridTextColumn Header="ОКФС" Binding="{Binding Path=Okfs}" Width="*"/>
+                            <DataGridTextColumn Header="ОКОПФ" Binding="{Binding Path=Okopf}" Width="*"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path=Telephone}"  Width="*"/>
+                            <DataGridTextColumn Header="Доп телефон" Binding="{Binding Path=DopTelephone}"  Width="*"/>
                             <DataGridTextColumn Header="Электронная почта" Binding="{Binding Path=Email}" IsReadOnly="False" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <GroupBox x:Name="GrpBxEditWebsbor" Header="Редактирование" Margin="10,0,502,25" Height="86" VerticalAlignment="Bottom" FontFamily="Arial" UseLayoutRounding="True" Foreground="#FFFDFDFD" BorderBrush="#9cdbff" FontWeight="Bold">
+                    <GroupBox x:Name="GrpBxEditCatalog" Header="Редактирование" Margin="10,0,502,25" Height="86" VerticalAlignment="Bottom" FontFamily="Arial" UseLayoutRounding="True" Foreground="#FFFDFDFD" BorderBrush="#9cdbff" FontWeight="Bold">
                         <Grid Margin="0,0,-2,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="141*"/>
