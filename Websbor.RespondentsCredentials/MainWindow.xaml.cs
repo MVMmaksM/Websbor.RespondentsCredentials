@@ -87,12 +87,12 @@ namespace Websbor.RespondentsCredentials
 
         private void MenuItemDeleteCredential_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.DeleteCredential();
         }
 
         private void MenuItemDeleteCatalog_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.DeleteCatalog();
         }
         #endregion
 
@@ -133,7 +133,7 @@ namespace Websbor.RespondentsCredentials
 
         private void BtnDeleteCredential_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.DeleteCredentialRow();
         }
 
         private void BtnGetAllCredential_Click(object sender, RoutedEventArgs e)
@@ -169,12 +169,12 @@ namespace Websbor.RespondentsCredentials
 
         private void BtnSearchCatalog_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.SearchCatalog();
         }
 
         private void BtnDeleteCatalog_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.DeleteCatalogRow();
         }
         #endregion
 

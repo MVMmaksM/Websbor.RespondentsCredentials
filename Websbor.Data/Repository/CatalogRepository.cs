@@ -23,7 +23,7 @@ namespace Websbor.Data.Repository
         /// <summary>
         /// очистка каталога
         /// </summary>
-        public async Task<int> DeleteAllCatalog() => await _context.Catalog.ExecuteDeleteAsync();
+        public async Task<int> DeleteAllCatalogAsync() => await _context.Catalog.ExecuteDeleteAsync();
 
         /// <summary>
         /// удаление записи по id
@@ -171,6 +171,6 @@ namespace Websbor.Data.Repository
         public async Task<List<CatalogWebsborAsgs>> SelectFromCatalog(string sqlSelectQuery, SqlParameter sqlParameter)
         {
             return await _context.Catalog.FromSqlRaw(sqlSelectQuery, sqlParameter).ToListAsync();
-        }       
+        }
     }
 }

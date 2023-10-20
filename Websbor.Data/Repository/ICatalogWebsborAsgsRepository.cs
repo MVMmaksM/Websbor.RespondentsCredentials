@@ -27,7 +27,7 @@ namespace Websbor.Data.Repository
         Task DeleteCatalogAsync(CatalogWebsborAsgs catalog);
         Task UpdateCatalogAsync(CatalogWebsborAsgs catalog);
         Task<List<CatalogWebsborAsgs>> SelectFromCatalog(string sqlSelectQuery, SqlParameter sqlParameter);
-        Task<int> DeleteAllCatalog();
+        Task<int> DeleteAllCatalogAsync();
         Task<int> UpdateCatalogAsync(Expression<Func<SetPropertyCalls<CatalogWebsborAsgs>, SetPropertyCalls<CatalogWebsborAsgs>>> expression);
     }
 }

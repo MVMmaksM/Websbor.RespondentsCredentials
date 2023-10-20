@@ -92,7 +92,7 @@ namespace Websbor.RespondentsCredentials.View
             {
                 try
                 {
-                    _addCredential.CatalogWebsborAsgs = await _catalogRepository.GetCatalogByOkpoAsync(TxtBxOkpoCredential.Text);
+                    _addCredential.CatalogWebsborAsgs = await _catalogRepository.GetCatalogByOkpoAsync(_addCredential.Okpo);
                 }
                 catch (Exception ex)
                 {

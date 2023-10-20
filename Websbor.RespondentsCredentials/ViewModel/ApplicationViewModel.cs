@@ -20,9 +20,11 @@ namespace Websbor.RespondentsCredentials.ViewModel
 
         public ApplicationViewModel()
         {
-            Search = new SearchModel.SearchModel();
+            SearchCredential = new SearchModel.SearchModel();
+            SearchCatalog = new SearchModel.SearchModel();
         }
-        public SearchModel.SearchModel? Search { get; set; }
+        public SearchModel.SearchModel? SearchCredential { get; set; }
+        public SearchModel.SearchModel? SearchCatalog { get; set; }
         public CatalogWebsborAsgs SelectedCatalog
         {
             get { return _selectedCatalog; }
@@ -32,7 +34,6 @@ namespace Websbor.RespondentsCredentials.ViewModel
                 OnPropertyChanged("SelectedCatalog");
             }
         }
-
 
         public Credentials SelectedCredential
         {

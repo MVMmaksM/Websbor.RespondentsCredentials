@@ -42,7 +42,9 @@ namespace Websbor.RespondentsCredentials.AppFacade
             try
             {
                 await _catalogRepository.DeleteCatalogAsync(_applicationViewModel.SelectedCatalog);
-                _messageService.Info("Запись успешно удалена!");
+                _applicationViewModel.Catalog.Remove(_applicationViewModel.SelectedCatalog);
+
+                _messageService.Info("Запись удалена из базы данных!");
             }
             catch (Exception ex)
             {
@@ -51,18 +53,23 @@ namespace Websbor.RespondentsCredentials.AppFacade
         }
         public void EditCatalog(MainWindow mainWindow)
         {
-            var addCatalogWindow = new AddAndEditCatalogWindow(_messageService, _catalogRepository, _applicationViewModel.SelectedCatalog);
-            addCatalogWindow.Owner = mainWindow;
-            addCatalogWindow.Show();
+            if (_applicationViewModel.SelectedCatalog is not null)
+            {
+                var addCatalogWindow = new AddAndEditCatalogWindow(_messageService, _catalogRepository, _applicationViewModel.SelectedCatalog);
+                addCatalogWindow.Owner = mainWindow;
+                addCatalogWindow.Show();
+            }
         }
         public async void DeleteCatalog()
         {
-            if (_messageService.Question("Удалить все записи из каталога Web-сбора?"))
+            var countAllRows = await _catalogRepository.GetCountCatalogAsync();
+
+            if (_messageService.Question($"Внимание! Из таблицы будут удалены все данные. \nКоличество записей в таблице: {countAllRows}.\nОчистить таблицу?"))
             {
                 try
                 {
-                    var countDeletedRows = await _catalogRepository.DeleteAllCatalog();
-                    _messageService.Info($"Из каталога Web-сбора было удалено {countDeletedRows} записей!");
+                    var countDeleted = await _catalogRepository.DeleteAllCatalogAsync();
+                    _messageService.Info($"Удалено записей из таблицы: {countDeleted}");
                 }
                 catch (Exception ex)
                 {
@@ -82,9 +89,37 @@ namespace Websbor.RespondentsCredentials.AppFacade
                 _messageService.Error(ex.Message);
             }
         }
-        public void SearchCatalog()
+        public async void SearchCatalog()
         {
-            throw new NotImplementedException();
+            try
+            {
+                BindingList<CatalogWebsborAsgs> searchResult = null;
+
+                if (!string.IsNullOrWhiteSpace(_applicationViewModel.SearchCatalog.SearchByOkpo) && !string.IsNullOrWhiteSpace(_applicationViewModel.SearchCatalog.SearchByName))
+                {
+                    var result = await _catalogRepository.GetCatalogByNameAndOkpoAsync(_applicationViewModel.SearchCatalog.SearchByName, _applicationViewModel.SearchCatalog.SearchByOkpo);
+                    searchResult = new BindingList<CatalogWebsborAsgs>(result);
+                }
+                else if (!string.IsNullOrWhiteSpace(_applicationViewModel.SearchCatalog.SearchByOkpo) && string.IsNullOrWhiteSpace(_applicationViewModel.SearchCatalog.SearchByName))
+                {
+                    var result = await _catalogRepository.GetCatalogByLikeOkpoAsync(_applicationViewModel.SearchCatalog.SearchByOkpo);
+                    searchResult = new BindingList<CatalogWebsborAsgs>(result);
+                }
+                else if (string.IsNullOrWhiteSpace(_applicationViewModel.SearchCatalog.SearchByOkpo) && !string.IsNullOrWhiteSpace(_applicationViewModel.SearchCatalog.SearchByName))
+                {
+                    var result = await _catalogRepository.GetCatalogByNameAsync(_applicationViewModel.SearchCatalog.SearchByName);
+                    searchResult = new BindingList<CatalogWebsborAsgs>(result);
+                }
+
+                if (searchResult is not null)
+                {
+                    _applicationViewModel.Catalog = searchResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                _messageService.Error(ex.Message);
+            }
         }
         #endregion
 
@@ -133,14 +168,36 @@ namespace Websbor.RespondentsCredentials.AppFacade
             addCredentialWindow.Owner = mainWindow;
             addCredentialWindow.Show();
         }
-        public void DeleteCredential()
+        public async void DeleteCredential()
         {
-            throw new NotImplementedException();
-        }
+            var countAllRows = await _credentialsRepository.GetCountCredentialsAsync();
 
-        public void DeleteCredentialRow()
+            if (_messageService.Question($"Внимание! Из таблицы будут удалены все данные. \nКоличество записей в таблице: {countAllRows}.\nОчистить таблицу?"))
+            {
+                try
+                {
+                    var countDeleted = await _credentialsRepository.DeleteAllCredential();
+                    _messageService.Info($"Удалено записей из таблицы: {countDeleted}");
+                }
+                catch (Exception ex)
+                {
+                    _messageService.Error(ex.Message);
+                }
+            }
+        }
+        public async void DeleteCredentialRow()
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _credentialsRepository.DeleteCredentialAsync(_applicationViewModel.SelectedCredential);
+                _applicationViewModel.Credentials.Remove(_applicationViewModel.SelectedCredential);
+
+                _messageService.Info("Запись удалена из базы данных!");
+            }
+            catch (Exception ex)
+            {
+                _messageService.Error(ex.Message);
+            }
         }
         public void EditCredential(MainWindow mainWindow)
         {
@@ -164,9 +221,37 @@ namespace Websbor.RespondentsCredentials.AppFacade
                 _messageService.Error(ex.Message);
             }
         }
-        public void SearchCredential()
+        public async void SearchCredential()
         {
+            try
+            {
+                BindingList<Credentials> searchResult = null;
 
+                if (!string.IsNullOrWhiteSpace(_applicationViewModel.SearchCredential.SearchByOkpo) && !string.IsNullOrWhiteSpace(_applicationViewModel.SearchCredential.SearchByName))
+                {
+                    var result = await _credentialsRepository.GetCredentialByNameAndOkpoAsync(_applicationViewModel.SearchCredential.SearchByName, _applicationViewModel.SearchCredential.SearchByOkpo);
+                    searchResult = new BindingList<Credentials>(result);
+                }
+                else if (!string.IsNullOrWhiteSpace(_applicationViewModel.SearchCredential.SearchByOkpo) && string.IsNullOrWhiteSpace(_applicationViewModel.SearchCredential.SearchByName))
+                {
+                    var result = await _credentialsRepository.GetCredentialByOkpoAsync(_applicationViewModel.SearchCredential.SearchByOkpo);
+                    searchResult = new BindingList<Credentials>(result);
+                }
+                else if (string.IsNullOrWhiteSpace(_applicationViewModel.SearchCredential.SearchByOkpo) && !string.IsNullOrWhiteSpace(_applicationViewModel.SearchCredential.SearchByName))
+                {
+                    var result = await _credentialsRepository.GetCredentialByNameAsync(_applicationViewModel.SearchCredential.SearchByName);
+                    searchResult = new BindingList<Credentials>(result);
+                }
+
+                if (searchResult is not null)
+                {
+                    _applicationViewModel.Credentials = searchResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                _messageService.Error(ex.Message);
+            }
         }
         #endregion
 
