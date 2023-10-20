@@ -17,6 +17,7 @@ using Websbor.Data.Model;
 using Websbor.Data.Repository;
 using Websbor.RespondentsCredentials.Prototype;
 using Websbor.RespondentsCredentials.Services;
+using Websbor.RespondentsCredentials.Services.Logger;
 
 namespace Websbor.RespondentsCredentials.View
 {
@@ -28,14 +29,16 @@ namespace Websbor.RespondentsCredentials.View
         private readonly ICatalogWebsborAsgsRepository _catalogRepository;
         private readonly IMessageService _messageService;
         private readonly ICredentialsRepository _credentialRepository;
+        private readonly ILoggerService _loggerService;
         private readonly Credentials? _updateCredential;
         private readonly Credentials? _tempUpdateCredential;
         private readonly Credentials? _addCredential;
-        public AddAndEditCredentialWindow(ICatalogWebsborAsgsRepository catalogRepository, IMessageService messageService, ICredentialsRepository credentialRepository, Credentials? updateCredential = null)
+        public AddAndEditCredentialWindow(ILoggerService loggerService, ICatalogWebsborAsgsRepository catalogRepository, IMessageService messageService, ICredentialsRepository credentialRepository, Credentials? updateCredential = null)
         {
             InitializeComponent();
             _credentialRepository = credentialRepository;
             _messageService = messageService;
+            _loggerService = loggerService;
 
             if (updateCredential is null)
             {
@@ -61,18 +64,23 @@ namespace Websbor.RespondentsCredentials.View
             {
                 try
                 {
+                    _loggerService.Info("Добавление записи в таблицу учетных данных респондентов");
+
                     await _credentialRepository.SaveCredentialAsync(_addCredential);
                     _messageService.Info("Запись успешно добавлена в базу данных!");
                 }
                 catch (Exception ex)
                 {
                     _messageService.Error(ex.Message);
+                    _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
                 }
             }
             else
             {
                 try
                 {
+                    _loggerService.Info("Обновление записи в таблице учетных данных респондентов");
+
                     Prototype<Credentials>.SetValueProperties(_updateCredential, _tempUpdateCredential);
 
                     _updateCredential.DateUpdate = DateTime.Now;
@@ -82,6 +90,7 @@ namespace Websbor.RespondentsCredentials.View
                 catch (Exception ex)
                 {
                     _messageService.Error(ex.Message);
+                    _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
                 }
             }
         }
@@ -92,11 +101,13 @@ namespace Websbor.RespondentsCredentials.View
             {
                 try
                 {
+                    _loggerService.Info("Подгрузка данных из каталога Web-сбора для добавления в таблицу учетных данных");
                     _addCredential.CatalogWebsborAsgs = await _catalogRepository.GetCatalogByOkpoAsync(_addCredential.Okpo);
                 }
                 catch (Exception ex)
                 {
                     _messageService.Error(ex.Message);
+                    _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
                 }
             }
         }

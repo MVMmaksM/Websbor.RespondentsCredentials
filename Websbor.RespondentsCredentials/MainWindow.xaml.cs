@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Websbor.Data;
 using Websbor.RespondentsCredentials.AppFacade;
+using Websbor.RespondentsCredentials.Services.Logger;
 using Websbor.RespondentsCredentials.ViewModel;
 
 namespace Websbor.RespondentsCredentials
@@ -25,8 +26,12 @@ namespace Websbor.RespondentsCredentials
     public partial class MainWindow : Window
     {
         private readonly IAppFacade _appFacade;
-        public MainWindow(IAppFacade appFacade, ApplicationViewModel applicationViewModel)
+        private readonly ILoggerService _loggerService;
+        public MainWindow(IAppFacade appFacade, ApplicationViewModel applicationViewModel, ILoggerService loggerService)
         {
+            _loggerService = loggerService;
+            _loggerService.Info("Запуск приложения");
+
             InitializeComponent();
             _appFacade = appFacade;
             DataContext = applicationViewModel;
@@ -35,42 +40,42 @@ namespace Websbor.RespondentsCredentials
         #region меню Файл
         private void MenuItemLoadCredential_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.LoadCredential();
         }
 
         private void MenuItemLoadCatalog_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.LoadCatalog();
         }
 
         private void MenuItemSaveAllRowCredential_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.SaveAllCredential();
         }
 
         private void MenuItemSaveCurrentRowsCredential_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.SaveCurrentRowsCredential();
         }
 
         private void MenuItemSaveAllRowCatalog_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.SaveAllCatalog();
         }
 
         private void MenuItemSaveCurrentRowsCatalog_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.SaveCurrentRowsCatalog();
         }
 
         private void MenuItemShemaLoadCredential_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.ShemaLoadCredential();
         }
 
         private void MenuItemShemaLoadCatalog_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.ShemaLoadCatalog();
         }
         #endregion
 
@@ -82,7 +87,7 @@ namespace Websbor.RespondentsCredentials
 
         private void MenuItemExecuteSqlQuery_Click(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.ExecuteSqlQuery();
         }
 
         private void MenuItemDeleteCredential_Click(object sender, RoutedEventArgs e)
@@ -99,29 +104,29 @@ namespace Websbor.RespondentsCredentials
         #region меню Протокол
         private void MenuItemOpenProtocol(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.OpenProtocol();
         }
 
         private void MenuItemOpenDirectoryProtocol(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.OpenDirectoryProtocol();
         }
         #endregion
 
         #region меню log
         private void MenuItemOpenCurrentLogFile(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.OpenCurrentLogFile();
         }
 
         private void MenuItemOpenDirectoryLogs(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.OpenDirectoryLogs();
         }
 
         private void MenuItemDeleteLogs(object sender, RoutedEventArgs e)
         {
-
+            _appFacade.DeleteLogs();
         }
         #endregion
 
@@ -180,7 +185,7 @@ namespace Websbor.RespondentsCredentials
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
-
+            _loggerService.Info("Закрытие приложения");
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

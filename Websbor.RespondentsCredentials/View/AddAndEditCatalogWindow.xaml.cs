@@ -15,6 +15,7 @@ using Websbor.Data.Model;
 using Websbor.Data.Repository;
 using Websbor.RespondentsCredentials.Prototype;
 using Websbor.RespondentsCredentials.Services;
+using Websbor.RespondentsCredentials.Services.Logger;
 
 namespace Websbor.RespondentsCredentials.View
 {
@@ -28,11 +29,13 @@ namespace Websbor.RespondentsCredentials.View
         private readonly CatalogWebsborAsgs? _tempUpdateCatalog;
         private readonly ICatalogWebsborAsgsRepository _catalogRepository;
         private readonly IMessageService _messageService;
-        public AddAndEditCatalogWindow(IMessageService messageService, ICatalogWebsborAsgsRepository catalogRepository, CatalogWebsborAsgs updateCatalog = null)
+        private readonly ILoggerService _loggerService;
+        public AddAndEditCatalogWindow(ILoggerService loggerService, IMessageService messageService, ICatalogWebsborAsgsRepository catalogRepository, CatalogWebsborAsgs updateCatalog = null)
         {
             InitializeComponent();
             _catalogRepository = catalogRepository;
             _messageService = messageService;
+            _loggerService = loggerService;
 
             if (updateCatalog is null)
             {
@@ -53,18 +56,23 @@ namespace Websbor.RespondentsCredentials.View
             {
                 try
                 {
+                    _loggerService.Info("Добавление записи в каталог Web-сбора");
+
                     await _catalogRepository.SaveCatalogAsync(_addCatalog);
                     _messageService.Info("Запись успешно добавлена!");
                 }
                 catch (Exception ex)
                 {
                     _messageService.Error(ex.Message);
+                    _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
                 }
             }
             else
             {
                 try
                 {
+                    _loggerService.Info("Обновление записи в каталоге Web-сбора");
+
                     Prototype<CatalogWebsborAsgs>.SetValueProperties(_updateCatalog, _tempUpdateCatalog);
                     await _catalogRepository.UpdateCatalogAsync(_updateCatalog);
                     _messageService.Info("Запись успешно обновлена!");
@@ -72,6 +80,7 @@ namespace Websbor.RespondentsCredentials.View
                 catch (Exception ex)
                 {
                     _messageService.Error(ex.Message);
+                    _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
                 }
             }
         }

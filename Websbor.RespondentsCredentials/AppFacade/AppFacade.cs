@@ -3,13 +3,16 @@ using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 using Websbor.Data;
 using Websbor.Data.Model;
 using Websbor.Data.Repository;
 using Websbor.RespondentsCredentials.Services;
+using Websbor.RespondentsCredentials.Services.Logger;
 using Websbor.RespondentsCredentials.View;
 using Websbor.RespondentsCredentials.ViewModel;
 
@@ -20,20 +23,23 @@ namespace Websbor.RespondentsCredentials.AppFacade
         private readonly ICatalogWebsborAsgsRepository _catalogRepository;
         private readonly ICredentialsRepository _credentialsRepository;
         private readonly IMessageService _messageService;
+        private readonly ILoggerService _loggerService;
         private ApplicationViewModel _applicationViewModel;
+        private string pathLogDirectory = Path.Combine(Environment.CurrentDirectory, "logs");
         public AppFacade(IMessageService messageService, ApplicationViewModel applicationViewModel,
-            ICredentialsRepository credentialsRepository, ICatalogWebsborAsgsRepository catalogRepository)
+            ICredentialsRepository credentialsRepository, ICatalogWebsborAsgsRepository catalogRepository, ILoggerService loggerService)
         {
             _messageService = messageService;
             _applicationViewModel = applicationViewModel;
             _credentialsRepository = credentialsRepository;
             _catalogRepository = catalogRepository;
+            _loggerService = loggerService;
         }
 
         #region работа с каталогом      
         public void AddCatalog(MainWindow mainWindow)
         {
-            var addCatalogWindow = new AddAndEditCatalogWindow(_messageService, _catalogRepository);
+            var addCatalogWindow = new AddAndEditCatalogWindow(_loggerService, _messageService, _catalogRepository);
             addCatalogWindow.Owner = mainWindow;
             addCatalogWindow.Show();
         }
@@ -41,6 +47,8 @@ namespace Websbor.RespondentsCredentials.AppFacade
         {
             try
             {
+                _loggerService.Info("Удаление записи из БД");
+
                 await _catalogRepository.DeleteCatalogAsync(_applicationViewModel.SelectedCatalog);
                 _applicationViewModel.Catalog.Remove(_applicationViewModel.SelectedCatalog);
 
@@ -49,13 +57,14 @@ namespace Websbor.RespondentsCredentials.AppFacade
             catch (Exception ex)
             {
                 _messageService.Error(ex.Message);
+                _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
             }
         }
         public void EditCatalog(MainWindow mainWindow)
         {
             if (_applicationViewModel.SelectedCatalog is not null)
             {
-                var addCatalogWindow = new AddAndEditCatalogWindow(_messageService, _catalogRepository, _applicationViewModel.SelectedCatalog);
+                var addCatalogWindow = new AddAndEditCatalogWindow(_loggerService, _messageService, _catalogRepository, _applicationViewModel.SelectedCatalog);
                 addCatalogWindow.Owner = mainWindow;
                 addCatalogWindow.Show();
             }
@@ -68,12 +77,15 @@ namespace Websbor.RespondentsCredentials.AppFacade
             {
                 try
                 {
+                    _loggerService.Info("Очистка каталога Web-сбора");
+
                     var countDeleted = await _catalogRepository.DeleteAllCatalogAsync();
                     _messageService.Info($"Удалено записей из таблицы: {countDeleted}");
                 }
                 catch (Exception ex)
                 {
                     _messageService.Error(ex.Message);
+                    _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
                 }
             }
         }
@@ -81,18 +93,24 @@ namespace Websbor.RespondentsCredentials.AppFacade
         {
             try
             {
+
+                _loggerService.Info("Получение всех записей каталога Web-сбора");
+
                 var catalog = await _catalogRepository.GetAllCatalogAsync();
                 _applicationViewModel.Catalog = new BindingList<CatalogWebsborAsgs>(catalog);
             }
             catch (Exception ex)
             {
                 _messageService.Error(ex.Message);
+                _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
             }
         }
         public async void SearchCatalog()
         {
             try
             {
+                _loggerService.Info("Поиск записей в каталоге Web-сбора");
+
                 BindingList<CatalogWebsborAsgs> searchResult = null;
 
                 if (!string.IsNullOrWhiteSpace(_applicationViewModel.SearchCatalog.SearchByOkpo) && !string.IsNullOrWhiteSpace(_applicationViewModel.SearchCatalog.SearchByName))
@@ -119,6 +137,7 @@ namespace Websbor.RespondentsCredentials.AppFacade
             catch (Exception ex)
             {
                 _messageService.Error(ex.Message);
+                _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
             }
         }
         #endregion
@@ -164,7 +183,7 @@ namespace Websbor.RespondentsCredentials.AppFacade
         #region работа с учетными данными
         public void AddCredential(MainWindow mainWindow)
         {
-            var addCredentialWindow = new AddAndEditCredentialWindow(_catalogRepository, _messageService, _credentialsRepository);
+            var addCredentialWindow = new AddAndEditCredentialWindow(_loggerService, _catalogRepository, _messageService, _credentialsRepository);
             addCredentialWindow.Owner = mainWindow;
             addCredentialWindow.Show();
         }
@@ -176,12 +195,15 @@ namespace Websbor.RespondentsCredentials.AppFacade
             {
                 try
                 {
+                    _loggerService.Info("Очистка таблицы учетных данных респондентов");
+
                     var countDeleted = await _credentialsRepository.DeleteAllCredential();
                     _messageService.Info($"Удалено записей из таблицы: {countDeleted}");
                 }
                 catch (Exception ex)
                 {
                     _messageService.Error(ex.Message);
+                    _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
                 }
             }
         }
@@ -189,6 +211,8 @@ namespace Websbor.RespondentsCredentials.AppFacade
         {
             try
             {
+                _loggerService.Info("Удаление записи из таблицы учетных данных респондентов");
+
                 await _credentialsRepository.DeleteCredentialAsync(_applicationViewModel.SelectedCredential);
                 _applicationViewModel.Credentials.Remove(_applicationViewModel.SelectedCredential);
 
@@ -197,13 +221,14 @@ namespace Websbor.RespondentsCredentials.AppFacade
             catch (Exception ex)
             {
                 _messageService.Error(ex.Message);
+                _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
             }
         }
         public void EditCredential(MainWindow mainWindow)
         {
             if (_applicationViewModel.SelectedCredential is not null)
             {
-                var editCredentialWindow = new AddAndEditCredentialWindow(_catalogRepository, _messageService, _credentialsRepository,
+                var editCredentialWindow = new AddAndEditCredentialWindow(_loggerService, _catalogRepository, _messageService, _credentialsRepository,
                 _applicationViewModel.SelectedCredential);
                 editCredentialWindow.Owner = mainWindow;
                 editCredentialWindow.Show();
@@ -213,18 +238,23 @@ namespace Websbor.RespondentsCredentials.AppFacade
         {
             try
             {
+                _loggerService.Info("Получение всех записей из таблицы учетных данных");
+
                 var credentials = await _credentialsRepository.GetAllCredentialsAsync();
                 _applicationViewModel.Credentials = new BindingList<Credentials>(credentials);
             }
             catch (Exception ex)
             {
                 _messageService.Error(ex.Message);
+                _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
             }
         }
         public async void SearchCredential()
         {
             try
             {
+                _loggerService.Info("Поиск записей в таблице учетных данных");
+
                 BindingList<Credentials> searchResult = null;
 
                 if (!string.IsNullOrWhiteSpace(_applicationViewModel.SearchCredential.SearchByOkpo) && !string.IsNullOrWhiteSpace(_applicationViewModel.SearchCredential.SearchByName))
@@ -251,6 +281,7 @@ namespace Websbor.RespondentsCredentials.AppFacade
             catch (Exception ex)
             {
                 _messageService.Error(ex.Message);
+                _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
             }
         }
         #endregion
@@ -258,16 +289,20 @@ namespace Websbor.RespondentsCredentials.AppFacade
         #region работа с log
         public void DeleteLogs()
         {
-            throw new NotImplementedException();
+            _loggerService.Info("Удаление всех log-файлов");
+            _loggerService.DeleteAllLogs(pathLogDirectory);
         }
         public void OpenCurrentLogFile()
         {
-            throw new NotImplementedException();
-        }
+            _loggerService.Info("Открытие текущего log-файла");
 
+            var fullNameCurrentLog = Path.Combine(pathLogDirectory, $"{DateTime.Now.ToString("yyyy-MM-dd")}.log");
+            _loggerService.OpenCurrentLogFile(fullNameCurrentLog);
+        }
         public void OpenDirectoryLogs()
         {
-            throw new NotImplementedException();
+            _loggerService.Info("Открытие директории с log-файлами");
+            _loggerService.OpenDirectoryLogs(pathLogDirectory);
         }
         #endregion
 

@@ -11,6 +11,7 @@ using Websbor.Data;
 using Websbor.Data.Repository;
 using Websbor.RespondentsCredentials.AppFacade;
 using Websbor.RespondentsCredentials.Services;
+using Websbor.RespondentsCredentials.Services.Logger;
 using Websbor.RespondentsCredentials.ViewModel;
 
 namespace Websbor.RespondentsCredentials
@@ -42,6 +43,7 @@ namespace Websbor.RespondentsCredentials
             services.AddSingleton<IMessageService, MessageService>();
             services.AddSingleton<ICredentialsRepository, CredentialRepository>();
             services.AddSingleton<ICatalogWebsborAsgsRepository, CatalogRepository>();
+            services.AddSingleton<ILoggerService, LoggerService>();
         }
 
         private void OnStartup(object sender, StartupEventArgs e)
