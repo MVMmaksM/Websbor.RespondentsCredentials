@@ -107,7 +107,7 @@ namespace Websbor.Data.Repository
         /// <summary>
         /// получение всех записей
         /// </summary>
-        public async Task<List<Credentials>> GetAllCredentialsAsync() => await _context.Credentials.ToListAsync();
+        public async Task<List<Credentials>> GetAllCredentialsAsync() => await _context.Credentials.Include(c=>c.CatalogWebsborAsgs).ToListAsync();
 
         /// <summary>
         /// получение количества записей в таблице
