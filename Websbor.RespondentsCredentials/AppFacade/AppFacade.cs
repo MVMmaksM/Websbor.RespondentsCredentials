@@ -144,10 +144,13 @@ namespace Websbor.RespondentsCredentials.AppFacade
         }
         public void EditCredential(MainWindow mainWindow)
         {
-            var addCredentialWindow = new AddAndEditCredentialWindow(_catalogRepository, _messageService, _credentialsRepository,
+            if (_applicationViewModel.SelectedCredential is not null)
+            {
+                var editCredentialWindow = new AddAndEditCredentialWindow(_catalogRepository, _messageService, _credentialsRepository,
                 _applicationViewModel.SelectedCredential);
-            addCredentialWindow.Owner = mainWindow;
-            addCredentialWindow.Show();
+                editCredentialWindow.Owner = mainWindow;
+                editCredentialWindow.Show();
+            }
         }
         public async void GetAllCredential()
         {

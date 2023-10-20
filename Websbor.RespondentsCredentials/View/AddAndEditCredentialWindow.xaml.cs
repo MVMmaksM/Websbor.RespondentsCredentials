@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Websbor.Data.Model;
 using Websbor.Data.Repository;
+using Websbor.RespondentsCredentials.Prototype;
 using Websbor.RespondentsCredentials.Services;
 
 namespace Websbor.RespondentsCredentials.View
@@ -27,6 +29,7 @@ namespace Websbor.RespondentsCredentials.View
         private readonly IMessageService _messageService;
         private readonly ICredentialsRepository _credentialRepository;
         private readonly Credentials? _updateCredential;
+        private readonly Credentials? _tempUpdateCredential;
         private readonly Credentials? _addCredential;
         public AddAndEditCredentialWindow(ICatalogWebsborAsgsRepository catalogRepository, IMessageService messageService, ICredentialsRepository credentialRepository, Credentials? updateCredential = null)
         {
@@ -47,18 +50,19 @@ namespace Websbor.RespondentsCredentials.View
             else
             {
                 _updateCredential = updateCredential;
-                this.DataContext = _updateCredential;
+                _tempUpdateCredential = Prototype<Credentials>.GetPrototype(updateCredential);
+                this.DataContext = _tempUpdateCredential;
             }
         }
 
         private async void BtnSaveCredential_Click(object sender, RoutedEventArgs e)
         {
-            if (_updateCredential is null)
+            if (_addCredential is not null)
             {
                 try
                 {
                     await _credentialRepository.SaveCredentialAsync(_addCredential);
-                    _messageService.Info("Запись успешно добавлена!");
+                    _messageService.Info("Запись успешно добавлена в базу данных!");
                 }
                 catch (Exception ex)
                 {
@@ -69,9 +73,11 @@ namespace Websbor.RespondentsCredentials.View
             {
                 try
                 {
+                    Prototype<Credentials>.SetValueProperties(_updateCredential, _tempUpdateCredential);
+
                     _updateCredential.DateUpdate = DateTime.Now;
                     await _credentialRepository.UpdateCredentialAsync(_updateCredential);
-                    _messageService.Info("Запись успешно обновлена!");
+                    _messageService.Info("Запись успешно обновлена в базе данных!");
                 }
                 catch (Exception ex)
                 {
@@ -86,7 +92,7 @@ namespace Websbor.RespondentsCredentials.View
             {
                 try
                 {
-                    _addCredential.CatalogWebsborAsgs = await _catalogRepository.GetCatalogByOkpoAsync(_addCredential.Okpo);
+                    _addCredential.CatalogWebsborAsgs = await _catalogRepository.GetCatalogByOkpoAsync(TxtBxOkpoCredential.Text);
                 }
                 catch (Exception ex)
                 {

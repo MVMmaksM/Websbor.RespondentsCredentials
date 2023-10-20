@@ -68,9 +68,9 @@
                             <DataGridTextColumn Header="Наименование" CanUserSort="True" Binding="{Binding Path=Name}" Width="*"/>
                             <DataGridTextColumn Header="ОКПО" Binding="{Binding Path=Okpo}" Width="*"/>
                             <DataGridTextColumn Header="Пароль" Binding="{Binding Path=Password}" Width="*"/>
-                            <DataGridTextColumn Header="Дата создания" Binding="{Binding Path=DateCreate}"  Width="*"/>
+                            <DataGridTextColumn Header="Дата создания" Binding="{Binding Path=DateCreate, StringFormat=\{0:dd.MM.yyyy\}}"  Width="*"/>
                             <DataGridTextColumn Header="Пользователь создавший запись" Binding="{Binding Path=UserCreate}"  Width="*"/>
-                            <DataGridTextColumn Header="Дата изменения" Binding="{Binding Path=DateUpdate}"  Width="*"/>
+                            <DataGridTextColumn Header="Дата изменения" Binding="{Binding Path=DateUpdate, StringFormat=\{0:dd.MM.yyyy\}}"  Width="*"/>
                             <DataGridTextColumn Header="Пользователь изменивший запись" Binding="{Binding Path=UserUpdate}"  Width="*"/>
                             <DataGridTextColumn Header="Примечание" Binding="{Binding Path=Comment}" Width="*"/>
                         </DataGrid.Columns>
