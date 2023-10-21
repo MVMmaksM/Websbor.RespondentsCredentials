@@ -54,6 +54,7 @@ namespace Websbor.RespondentsCredentials.View
             {
                 _updateCredential = updateCredential;
                 _tempUpdateCredential = Prototype<Credentials>.GetPrototype(updateCredential);
+                _catalogRepository = catalogRepository;
                 this.DataContext = _tempUpdateCredential;
             }
         }
@@ -102,7 +103,20 @@ namespace Websbor.RespondentsCredentials.View
                 try
                 {
                     _loggerService.Info("Подгрузка данных из каталога Web-сбора для добавления в таблицу учетных данных");
-                    _addCredential.CatalogWebsborAsgs = await _catalogRepository.GetCatalogByOkpoAsync(_addCredential.Okpo);
+                    _addCredential.CatalogWebsborAsgs = await _catalogRepository.GetCatalogByOkpoAsync(TxtBxOkpoCredential.Text);
+                }
+                catch (Exception ex)
+                {
+                    _messageService.Error(ex.Message);
+                    _loggerService.Error($"{ex.Message}\n{ex.StackTrace}");
+                }
+            }
+            else if (_tempUpdateCredential is not null)
+            {
+                try
+                {
+                    _loggerService.Info("Подгрузка данных из каталога Web-сбора при обновлении учетных данных");
+                    _tempUpdateCredential.CatalogWebsborAsgs = await _catalogRepository.GetCatalogByOkpoAsync(TxtBxOkpoCredential.Text);
                 }
                 catch (Exception ex)
                 {

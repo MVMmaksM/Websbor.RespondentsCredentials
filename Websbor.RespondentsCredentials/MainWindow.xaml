@@ -36,8 +36,7 @@
                 <MenuItem Header="Excel-шаблон загрузки учетных данных респондентов" Click="MenuItemShemaLoadCredential_Click"/>
                 <MenuItem Header="Excel-шаблон загрузки каталога web-сбора" Click="MenuItemShemaLoadCatalog_Click"/>
             </MenuItem>
-            <MenuItem x:Name="MenuDB"  Header="БД" BorderThickness="1,1,1,1" Height="22">
-                <MenuItem Header="Создать базу данных" Click="MenuItemCreateDb_Click"/>
+            <MenuItem x:Name="MenuDB"  Header="БД" BorderThickness="1,1,1,1" Height="22">               
                 <MenuItem Header="Выполнить sql-запрос" Click="MenuItemExecuteSqlQuery_Click"/>
                 <MenuItem Header="Очистить таблицу учетных данных респондентов" Click="MenuItemDeleteCredential_Click"/>
                 <MenuItem Header="Очистить таблицу Web-сбор" Click="MenuItemDeleteCatalog_Click"/>

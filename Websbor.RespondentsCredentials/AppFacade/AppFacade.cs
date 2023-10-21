@@ -12,6 +12,7 @@ using Websbor.Data;
 using Websbor.Data.Model;
 using Websbor.Data.Repository;
 using Websbor.RespondentsCredentials.Services;
+using Websbor.RespondentsCredentials.Services.GeneratorSqlExpression;
 using Websbor.RespondentsCredentials.Services.Logger;
 using Websbor.RespondentsCredentials.View;
 using Websbor.RespondentsCredentials.ViewModel;
@@ -20,6 +21,8 @@ namespace Websbor.RespondentsCredentials.AppFacade
 {
     internal class AppFacade : IAppFacade
     {
+        private readonly IDatabaseExecuteSqlRepository _executeSqlRepository;
+        private readonly IGeneratorSqlExpression _generatorSqlExpression;
         private readonly ICatalogWebsborAsgsRepository _catalogRepository;
         private readonly ICredentialsRepository _credentialsRepository;
         private readonly IMessageService _messageService;
@@ -27,13 +30,16 @@ namespace Websbor.RespondentsCredentials.AppFacade
         private ApplicationViewModel _applicationViewModel;
         private string pathLogDirectory = Path.Combine(Environment.CurrentDirectory, "logs");
         public AppFacade(IMessageService messageService, ApplicationViewModel applicationViewModel,
-            ICredentialsRepository credentialsRepository, ICatalogWebsborAsgsRepository catalogRepository, ILoggerService loggerService)
+            ICredentialsRepository credentialsRepository, ICatalogWebsborAsgsRepository catalogRepository,
+            ILoggerService loggerService, IGeneratorSqlExpression generatorSqlExpression, IDatabaseExecuteSqlRepository executeSqlRepository)
         {
             _messageService = messageService;
             _applicationViewModel = applicationViewModel;
             _credentialsRepository = credentialsRepository;
             _catalogRepository = catalogRepository;
             _loggerService = loggerService;
+            _generatorSqlExpression = generatorSqlExpression;
+            _executeSqlRepository = executeSqlRepository;
         }
 
         #region работа с каталогом      
@@ -318,27 +324,13 @@ namespace Websbor.RespondentsCredentials.AppFacade
         }
         #endregion
 
-        #region запросы к БД
-        public async void CreateDb()
+        #region запросы к БД       
+        public void ExecuteSqlQuery(MainWindow mainWindow)
         {
-            var optionBuilder = new DbContextOptionsBuilder<WebsborContext>();
-            optionBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=AwesomeNetwork;Trusted_Connection=True;Encrypt=false;Integrated Security=True;");
-
-            var dbContext = new WebsborContext(optionBuilder.Options);
-            var isCreateDb = await dbContext.Database.EnsureCreatedAsync();
-
-            if (isCreateDb)
-            {
-                _messageService.Info("База данных создана!");
-            }
-            else
-            {
-                _messageService.Error("База данных не создана!");
-            }
-        }
-        public void ExecuteSqlQuery()
-        {
-            throw new NotImplementedException();
+            var executedSqlWindow = new ExecuteSqlWindow(_applicationViewModel.ExecutedSql, _generatorSqlExpression,
+                _executeSqlRepository, _loggerService, _messageService);
+            executedSqlWindow.Owner = mainWindow;
+            executedSqlWindow.Show();
         }
         #endregion
     }

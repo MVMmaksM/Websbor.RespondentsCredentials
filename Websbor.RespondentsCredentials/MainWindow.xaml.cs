@@ -80,14 +80,10 @@ namespace Websbor.RespondentsCredentials
         #endregion
 
         #region меню БД
-        private void MenuItemCreateDb_Click(object sender, RoutedEventArgs e)
-        {
-            _appFacade.CreateDb();
-        }
-
+       
         private void MenuItemExecuteSqlQuery_Click(object sender, RoutedEventArgs e)
         {
-            _appFacade.ExecuteSqlQuery();
+            _appFacade.ExecuteSqlQuery(this);
         }
 
         private void MenuItemDeleteCredential_Click(object sender, RoutedEventArgs e)

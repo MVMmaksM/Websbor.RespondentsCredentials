@@ -16,8 +16,7 @@ namespace Websbor.RespondentsCredentials.AppFacade
         void SaveCurrentRowsCatalog();
         void ShemaLoadCredential();
         void ShemaLoadCatalog();
-        void CreateDb();
-        void ExecuteSqlQuery();
+        void ExecuteSqlQuery(MainWindow mainWindow);
         void DeleteCredential();
         void DeleteCatalog();
         void OpenProtocol();

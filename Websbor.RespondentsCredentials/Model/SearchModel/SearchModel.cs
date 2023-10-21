@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Websbor.RespondentsCredentials.SearchModel
+namespace Websbor.RespondentsCredentials.Model.SearchModel
 {
     public class SearchModel : INotifyPropertyChanged
     {

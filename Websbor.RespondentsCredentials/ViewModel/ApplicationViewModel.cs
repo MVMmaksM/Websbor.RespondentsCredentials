@@ -7,7 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Websbor.Data.Model;
-using Websbor.RespondentsCredentials.SearchModel;
+using Websbor.RespondentsCredentials.Model.ExecutedSqlModel;
+using Websbor.RespondentsCredentials.Model.SearchModel;
 
 namespace Websbor.RespondentsCredentials.ViewModel
 {
@@ -17,14 +18,25 @@ namespace Websbor.RespondentsCredentials.ViewModel
         private BindingList<CatalogWebsborAsgs>? _catalog;
         private Credentials? _selectedCredential;
         private CatalogWebsborAsgs? _selectedCatalog;
+        private ExecutedSql _executedSql;
 
+        public ExecutedSql ExecutedSql
+        {
+            get { return _executedSql; }
+            set
+            {
+                _executedSql = value;
+                OnPropertyChanged("ExecutedSql");
+            }
+        }
         public ApplicationViewModel()
         {
-            SearchCredential = new SearchModel.SearchModel();
-            SearchCatalog = new SearchModel.SearchModel();
+            SearchCredential = new SearchModel();
+            SearchCatalog = new SearchModel();
+            ExecutedSql = new ExecutedSql();
         }
-        public SearchModel.SearchModel? SearchCredential { get; set; }
-        public SearchModel.SearchModel? SearchCatalog { get; set; }
+        public SearchModel? SearchCredential { get; set; }
+        public SearchModel? SearchCatalog { get; set; }
         public CatalogWebsborAsgs SelectedCatalog
         {
             get { return _selectedCatalog; }

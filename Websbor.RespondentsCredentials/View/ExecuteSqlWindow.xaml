@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Websbor.RespondentsCredentials.View"
         mc:Ignorable="d"
-        Title="ExecuteSqlWindow" Height="724" Width="800" Background="#086499">
+        Title="Запросы к БД" Height="724" Width="800" Background="#086499" ResizeMode="NoResize">
     <Grid Margin="0,0,0,-6" UseLayoutRounding="True">
         <Border BorderThickness="0,2,0,0" Background="#086499" BorderBrush="#48b9fa" Grid.ColumnSpan="2" Height="25" VerticalAlignment="Bottom">
             <StackPanel Margin="0,611,-576,0">
                 <StatusBar Height="23"/>
             </StackPanel>
         </Border>
-        <GroupBox Header="Запросы" Margin="0,82,0,553" FontFamily="Arial" FontWeight="Bold" Foreground="#FFFBFBFB" BorderBrush="#9cdbff">
+        <GroupBox Header="Генератор запросов" Margin="0,82,0,0" FontFamily="Arial" FontWeight="Bold" Foreground="#FFFBFBFB" BorderBrush="#9cdbff" Height="79" VerticalAlignment="Top">
             <Grid Height="61">
                 <Button Click="CreateSelectQuery_Click" Content="Select" Height="25" Width="150" Margin="10,9,0,9" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" Background="#48b9fa" HorizontalAlignment="Left">
                     <Button.Resources>
@@ -34,7 +34,7 @@
                         <DropShadowEffect Color="Black" Direction="290" ShadowDepth="3" Opacity="0.6"/>
                     </Button.Effect>
                 </Button>
-                <Button Content="Delete" Click="CreateDeleteQuery_Click" Height="25" Width="150" Margin="412,12,226,10" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" Background="#48b9fa">
+                <Button Content="Delete" Click="CreateDeleteQuery_Click" Height="25" Width="150" Margin="412,19,0,17" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" Background="#48b9fa" HorizontalAlignment="Left">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="2"/>
@@ -44,7 +44,7 @@
                         <DropShadowEffect Color="Black" Direction="290" ShadowDepth="3" Opacity="0.6"/>
                     </Button.Effect>
                 </Button>
-                <Button Content="Insert" Click="CreateInsertQuery_Click"  Height="25" Width="150" Margin="628,12,10,10" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" Background="#48b9fa">
+                <Button Content="Insert" Click="CreateInsertQuery_Click"  Height="25" Width="150" Margin="612,19,0,17" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" Background="#48b9fa" HorizontalAlignment="Left">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="2"/>
@@ -56,13 +56,13 @@
                 </Button>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Редактор запроса" Margin="0,166,0,340" FontFamily="Arial" FontWeight="Bold" Foreground="#FFFBFBFB" BorderBrush="#9cdbff">
-            <TextBox Height="184"/>
+        <GroupBox Header="Редактор запроса" Margin="0,166,0,0" FontFamily="Arial" FontWeight="Bold" Foreground="#FFFBFBFB" BorderBrush="#9cdbff" Height="208" VerticalAlignment="Top">
+            <TextBox x:Name="TxtBxEditQuery" Height="184" AcceptsReturn="True" Text="{Binding Path=SqlExpression}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" TextChanged="TextBox_TextChanged"/>
         </GroupBox>
-        <GroupBox Header="Результат" Margin="0,374,0,83" FontFamily="Arial" FontWeight="Bold" Foreground="#FFFBFBFB" BorderBrush="#9cdbff">
-            <DataGrid CanUserAddRows="False" AutoGenerateColumns="True" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff"/>
+        <GroupBox Header="Результат" Margin="0,374,0,0" FontFamily="Arial" FontWeight="Bold" Foreground="#FFFBFBFB" BorderBrush="#9cdbff" Height="257" VerticalAlignment="Top">
+            <DataGrid x:Name="DgResultExecuted" CanUserAddRows="False" AutoGenerateColumns="True" Background="#ebf8ff" VerticalGridLinesBrush="#c0c1c2" HorizontalGridLinesBrush="#c0c1c2" BorderBrush="#9cdbff"/>
         </GroupBox>
-        <Button Content="Выполнить" Click="ExecuteSql_Click" Height="25" Width="150" Margin="309,648,341,41" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" Background="#48b9fa">
+        <Button Content="Выполнить" Click="ExecuteSql_Click" Height="25" Width="150" Margin="309,636,0,0" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" Background="#48b9fa" VerticalAlignment="Top" HorizontalAlignment="Left">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="2"/>
@@ -72,12 +72,12 @@
                 <DropShadowEffect Color="Black" Direction="290" ShadowDepth="3" Opacity="0.6"/>
             </Button.Effect>
         </Button>
-        <GroupBox Header="Настройки подключения" Margin="0,10,0,637" FontFamily="Arial" FontWeight="Bold" Foreground="#FFFBFBFB" BorderBrush="#9cdbff">
+        <GroupBox Header="Настройки подключения" Margin="0,10,0,0" FontFamily="Arial" FontWeight="Bold" Foreground="#FFFBFBFB" BorderBrush="#9cdbff" Height="67" VerticalAlignment="Top">
             <Grid>
                 <Label Content="Сервер:" Height="25" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="64" Foreground="#FFFBFBFB"/>
-                <TextBox HorizontalAlignment="Left" Height="25" Margin="79,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="293"/>
+                <TextBox HorizontalAlignment="Left" Height="25" Margin="79,0,0,0" TextWrapping="Wrap" Text="{Binding Path=Server}" VerticalAlignment="Center" Width="293"/>
                 <Label Height="25" Content="База данных:" HorizontalAlignment="Left" Margin="394,0,0,0" VerticalAlignment="Center" Width="97" Foreground="#FFFBFBFB"/>
-                <TextBox Height="25" HorizontalAlignment="Left" Margin="496,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="282"/>
+                <TextBox Height="25" HorizontalAlignment="Left" Margin="496,0,0,0" TextWrapping="Wrap" Text="{Binding Path=Database}" VerticalAlignment="Center" Width="282"/>
             </Grid>
         </GroupBox>
     </Grid>

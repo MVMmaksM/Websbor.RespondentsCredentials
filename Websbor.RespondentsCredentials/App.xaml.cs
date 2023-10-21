@@ -11,6 +11,7 @@ using Websbor.Data;
 using Websbor.Data.Repository;
 using Websbor.RespondentsCredentials.AppFacade;
 using Websbor.RespondentsCredentials.Services;
+using Websbor.RespondentsCredentials.Services.GeneratorSqlExpression;
 using Websbor.RespondentsCredentials.Services.Logger;
 using Websbor.RespondentsCredentials.ViewModel;
 
@@ -44,6 +45,8 @@ namespace Websbor.RespondentsCredentials
             services.AddSingleton<ICredentialsRepository, CredentialRepository>();
             services.AddSingleton<ICatalogWebsborAsgsRepository, CatalogRepository>();
             services.AddSingleton<ILoggerService, LoggerService>();
+            services.AddSingleton<IGeneratorSqlExpression, GeneratorSqlExpression>();
+            services.AddSingleton<IDatabaseExecuteSqlRepository, DatabaseExecuteSqlRepository>();
         }
 
         private void OnStartup(object sender, StartupEventArgs e)
